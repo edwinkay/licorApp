@@ -6,8 +6,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./list-products.component.scss'],
 })
 export class ListProductsComponent implements OnInit {
-  selectedProduct: any;
-  selectedProductPrice: any;
+  productoSeleccionado: any = null;
+  modalActivo = false;
+  productosRegistrados: any[] = [];
+  message: string = '';
+  enabledButton = false;
+  maxCantidad: any;
+  habilitar = true;
 
   products = [
     {
@@ -16,6 +21,9 @@ export class ListProductsComponent implements OnInit {
       precio: 16500,
       cantidad: 0,
       precioTotal: 0,
+      imagen:
+        'https://olimpica.vtexassets.com/arquivos/ids/735687-800-auto?v=637782321904170000&width=800&height=auto&aspect=true',
+      disponible: 10,
     },
     {
       nombre: 'Ron',
@@ -23,44 +31,9 @@ export class ListProductsComponent implements OnInit {
       precio: 22500,
       cantidad: 0,
       precioTotal: 0,
-    },
-  ];
-
-  productos = [
-    {
-      nombre: 'Vodka',
-      descripcion: 'Vodka premium importado de Rusia',
-      precio: 25.0,
-      cantidad: 0,
-      precioTotal: 0,
-    },
-    {
-      nombre: 'Gin',
-      descripcion: 'Gin elaborado con enebro y botánicos seleccionados',
-      precio: 30.0,
-      cantidad: 0,
-      precioTotal: 0,
-    },
-    {
-      nombre: 'Ron',
-      descripcion: 'Ron añejo de origen cubano',
-      precio: 35.0,
-      cantidad: 0,
-      precioTotal: 0,
-    },
-    {
-      nombre: 'Whisky',
-      descripcion: 'Whisky escocés de malta con sabor a turba',
-      precio: 40.0,
-      cantidad: 0,
-      precioTotal: 0,
-    },
-    {
-      nombre: 'Tequila',
-      descripcion: 'Tequila reposado de agave azul',
-      precio: 45.0,
-      cantidad: 0,
-      precioTotal: 0,
+      imagen:
+        'https://d2j6dbq0eux0bg.cloudfront.net/images/30491376/1511186234.jpg',
+      disponible: 5,
     },
   ];
 
@@ -68,50 +41,95 @@ export class ListProductsComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  actualizarPrecioTotal(producto: any) {
-    producto.precioTotal = producto.cantidad * producto.precio;
+  actualizarPrecioTotal() {
+    this.productoSeleccionado.precioTotal =
+      this.productoSeleccionado.precio * this.productoSeleccionado.cantidad;
+    this.productoSeleccionado.disponible =
+      this.productoSeleccionado.disponible +
+      this.productoSeleccionado.cantidadAnterior -
+      this.productoSeleccionado.cantidad;
   }
 
-  incrementarCantidad(producto: any) {
-    producto.cantidad++;
-    this.actualizarPrecioTotal(producto);
+  calcularPrecioTotal(cantidad: number) {
+    return this.productoSeleccionado.precio * cantidad;
   }
-
-  decrementarCantidad(producto: any) {
-    if (producto.cantidad > 0) {
-      producto.cantidad--;
-      this.actualizarPrecioTotal(producto);
+  abrirModal(producto: any) {
+    this.habilitar = true;
+    this.productoSeleccionado = producto;
+    const productoEncontrado = this.products.find(
+      (producto) => producto.nombre == this.productoSeleccionado.nombre
+    );
+    if (
+      Number.isNaN(productoEncontrado?.disponible) ||
+      productoEncontrado?.disponible == 0
+    ) {
+      this.modalActivo = false;
+      this.message = '* Producto agotado!!';
+      setTimeout(() => {
+        this.message = '';
+      }, 2000);
+    } else {
+      this.modalActivo = true;
     }
   }
-  agregarProducto() {
-    this.productos.push({
-      nombre: '',
-      descripcion: '',
-      precio: 0,
-      cantidad: 0,
-      precioTotal: 0,
-    });
+  cerrarModal() {
+    this.enabledButton = false;
+    this.modalActivo = false;
+    this.productoSeleccionado.cantidad = 0;
   }
-  eliminarProductos() {
-    this.productos = [];
+  incrementarCantidad() {
+    this.habilitar = false;
+    this.maxCantidad = this.productoSeleccionado.cantidad;
+    const nuevo = this.maxCantidad + 1;
+    if (nuevo == this.productoSeleccionado.disponible) {
+      this.enabledButton = true;
+    } else {
+      this.enabledButton = false;
+    }
+
+    this.productoSeleccionado.cantidad++;
+    this.productoSeleccionado.precioTotal =
+      this.productoSeleccionado.cantidad * this.productoSeleccionado.precio;
+  }
+
+  decrementarCantidad() {
+    this.enabledButton = false;
+    if (this.productoSeleccionado.cantidad > 0) {
+      this.productoSeleccionado.cantidad--;
+      this.productoSeleccionado.precioTotal =
+        this.productoSeleccionado.cantidad * this.productoSeleccionado.precio;
+    }
+    if (this.productoSeleccionado.cantidad == 0) {
+      this.habilitar = true;
+    }
+  }
+  registrarProducto() {
+    const { nombre, cantidad, precioTotal } = this.productoSeleccionado;
+    const productoEncontrado = this.products.find(
+      (producto) => producto.nombre === nombre
+    );
+    if (productoEncontrado) {
+      productoEncontrado.disponible -= cantidad;
+    }
+    this.productosRegistrados.push({ nombre, cantidad, precioTotal });
+    this.modalActivo = false;
+    this.enabledButton = false;
+    this.productoSeleccionado.cantidad = 0;
   }
   eliminarProducto(producto: any) {
-    const index = this.productos.indexOf(producto);
-    if (index !== -1) {
-      this.productos.splice(index, 1);
+    const index = this.productosRegistrados.indexOf(producto);
+    if (index > -1) {
+      this.productosRegistrados.splice(index, 1);
     }
   }
-  onProductSelected(event: any) {
-    // Obtén el producto seleccionado
-    const selectedProduct = event.target.value;
-    const pattern = /^[\d]+:\s*(.*)$/;
-    const match = selectedProduct.match(pattern);
-    const productName = match[1];
-    // Busca el precio del producto seleccionado en el array de productos
-
-    const product = this.products.find((p) => p.nombre === productName);
-    // Actualiza la variable de producto seleccionado y su precio
-    console.log(product?.precio);
-    this.selectedProductPrice = product?.precio;
+  borrarTabla() {
+    this.productosRegistrados = [];
+  }
+  calcularTotal() {
+    let total = 0;
+    this.productosRegistrados.forEach((producto) => {
+      total += producto.precioTotal;
+    });
+    return total;
   }
 }

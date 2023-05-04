@@ -1,70 +1,121 @@
-// .futuristic-list {
-//   list-style: none;
-//   margin: 0;
-//   padding: 0;
-//   font-family: 'Roboto', sans-serif;
-//   font-size: 18px;
-//   color: rgb(0, 0, 0);
-//   text-align: center;
-// }
 
-// .futuristic-list li {
-//   padding: 10px 0;
-//   border-bottom: 1px solid rgb(6, 6, 6);
-//   transition: all 0.3s ease-in-out;
-// }
-
-// .futuristic-list li:hover {
-//   background-color: rgba(255, 255, 255, 0.2);
-//   border-bottom-color: rgba(255, 255, 255, 0.4);
-//   cursor: pointer;
-// }
-table {
-  border-collapse: collapse;
-  width: 100%;
-}
-
-th, td {
-  text-align: left;
-  padding: 8px;
-}
-
-th {
-  background-color: #333;
-  color: white;
-}
-
-tr:nth-child(even) {
-  background-color: #f2f2f2;
-}
-
-tr:hover {
-  background-color: #ddd;
-}
-
-input {
-  width: 100%;
-  border: none;
-  padding: 4px;
-}
-
-button {
-  background-color: transparent;
-  border: none;
+.producto {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   cursor: pointer;
-  font-size: 16px;
+  margin: 10px;
 }
 
-button:hover {
-  color: red;
+.producto img {
+  margin-bottom: 10px;
 }
 
-.eliminar-producto {
+.producto h3 {
+  font-size: 1.2rem;
+  margin-bottom: 5px;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+.contenido-modal {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.contenido-modal img {
+  margin-bottom: 10px;
+}
+
+.contenido-modal h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.contenido-modal p {
+  margin: 5px 0;
+}
+
+.contenido-modal input {
+  margin-bottom: 10px;
+  padding: 5px;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.contenido-modal button {
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.btn-cantidad {
+  padding: 5px;
+  border: none;
+  background-color: #eee;
+  cursor: pointer;
+}
+
+.btn-decrementar {
+  border-radius: 5px 0 0 5px;
+}
+
+.btn-incrementar {
+  border-radius: 0 5px 5px 0;
+}
+
+.input-group {
   display: flex;
   align-items: center;
-  justify-content: center;
-  height: 24px;
+  margin-bottom: 10px;
 }
 
+#cantidad {
+  width: 40px;
+  text-align: center;
+}
+.btn-decrementar {
+  height: 32px;
+  order: 1;
+}
 
+#cantidad {
+  order: 2;
+}
 
+.btn-incrementar {
+  height: 32px;
+  order: 3;
+}
+
+.input-group {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 10px;
+  justify-content: space-between;
+  width: 100px;
+}
+.botones{
+    display: flex;
+    gap: 12px;
+}
