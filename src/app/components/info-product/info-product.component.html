@@ -1,4 +1,4 @@
-<div style="margin: 6px 6px 12px 6px;">
+<div style="margin: 6px 6px 12px 6px">
   <div style="display: flex; justify-content: space-between">
     <div>
       <H3>LISTA DE PRODUCTOS</H3>
@@ -28,9 +28,12 @@
       <td>{{ producto.descripcion }}</td>
       <td>{{ producto.disponible }}</td>
       <td>
-        <img width="50"
-        height="50" [src]="producto.imagenes" alt="url no valida">
-
+        <img
+          width="50"
+          height="50"
+          [src]="producto.imagenes"
+          alt="url no valida"
+        />
       </td>
       <td>{{ producto.precioCompra }}</td>
       <td>{{ producto.precio }}</td>
@@ -54,3 +57,6 @@
   </tbody>
   <p *ngIf="products.length == 0">No hay productos seleccionados</p>
 </table>
+<div style="margin: 6px 6px 12px 6px">
+  <button class="btn btn-danger" routerLink="/">Volver</button>
+</div>

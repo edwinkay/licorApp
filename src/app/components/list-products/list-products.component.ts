@@ -16,20 +16,45 @@ export class ListProductsComponent implements OnInit {
   habilitar = true;
   products: any [] = []
 
+  // products = [
+  //   {
+  //     nombre: 'Aguardiente caucano',
+  //     descripcion: 'tradicional',
+  //     precio: 16500,
+  //     cantidad: 0,
+  //     precioTotal: 0,
+  //     imagen:
+  //       'https://olimpica.vtexassets.com/arquivos/ids/735687-800-auto?v=637782321904170000&width=800&height=auto&aspect=true',
+  //     disponible: 10,
+  //   },
+  //   {
+  //     nombre: 'Ron',
+  //     descripcion: 'Viejo de caldas',
+  //     precio: 22500,
+  //     cantidad: 0,
+  //     precioTotal: 0,
+  //     imagen:
+  //       'https://d2j6dbq0eux0bg.cloudfront.net/images/30491376/1511186234.jpg',
+  //     disponible: 5,
+  //   },
+  // ];
+
   constructor(private _productService: ProductsService) {}
 
   ngOnInit(): void {
-    this._productService.getProducts().subscribe(data => {
-      this.products = []
+    this.getProducts()
+  }
+  getProducts(){
+    this._productService.getProducts().subscribe((data) => {
+      this.products = [];
       data.forEach((element: any) => {
-         this.products.push({
-           id: element.payload.doc.id,
-           ...element.payload.doc.data(),
-         });
-         console.log(this.products)
-      })
-    })
-
+        this.products.push({
+          id: element.payload.doc.id,
+          ...element.payload.doc.data(),
+        });
+        console.log(this.products);
+      });
+    });
   }
 
   actualizarPrecioTotal() {
@@ -108,18 +133,19 @@ export class ListProductsComponent implements OnInit {
     this.productoSeleccionado.cantidad = 0;
   }
   eliminarProducto(producto: any) {
-      const productoEliminado = this.productosRegistrados[producto];
-      const productoOriginal = this.products.find(
-        (p) => p.nombre === productoEliminado.nombre
-      );
-      console.log(productoOriginal)
     const index = this.productosRegistrados.indexOf(producto);
     if (index > -1) {
       this.productosRegistrados.splice(index, 1);
     }
-
+    const productoEncontrado = this.products.find(
+      (producto) => producto.nombre === this.productoSeleccionado.nombre
+    );
+    if (productoEncontrado) {
+      productoEncontrado.disponible += producto.cantidad;
+    }
   }
   borrarTabla() {
+    this.getProducts();
     this.productosRegistrados = [];
   }
   calcularTotal() {

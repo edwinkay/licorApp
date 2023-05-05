@@ -33,6 +33,16 @@ export class CreateProductComponent implements OnInit {
     this.EXeditProducto();
     this.obtener();
   }
+  verificar(){
+      if (this.createProduct.invalid) {
+        this.subbmited = true;
+        setTimeout(() => {
+          this.subbmited = false
+        }, 3000)
+        return
+      }
+  }
+
 
   agregarEditarProducto() {
     //se valida todos los campos
