@@ -3,14 +3,17 @@
     <div *ngFor="let producto of products">
       <div class="producto" (click)="abrirModal(producto)">
         <img
-        [src]="producto.imagen"
-        alt="{{ producto.nombre }}"
-        width="100"
-        height="100"
+          [src]="producto.imagen"
+          alt="{{ producto.nombre }}"
+          width="100"
+          height="100"
         />
         <h3>{{ producto.nombre }}</h3>
-        <p>Disponible: {{producto.disponible ? producto.disponible : 'No disponible' }}</p>
-        <p style="color: red;">{{producto.disponible ? '' : message }}</p>
+        <p>
+          Disponible:
+          {{ producto.disponible ? producto.disponible : "No disponible" }}
+        </p>
+        <p style="color: red">{{ producto.disponible ? "" : message }}</p>
       </div>
     </div>
     <div class="modal" *ngIf="modalActivo">
@@ -24,7 +27,14 @@
         <h3>{{ productoSeleccionado.nombre }}</h3>
         <p>Descripción: {{ productoSeleccionado.descripcion }}</p>
         <p>Precio: {{ productoSeleccionado.precio }}</p>
-        <p>Disponible: {{productoSeleccionado.disponible ? productoSeleccionado.disponible : 'No disponible' }}</p>
+        <p>
+          Disponible:
+          {{
+            productoSeleccionado.disponible
+              ? productoSeleccionado.disponible
+              : "No disponible"
+          }}
+        </p>
         <div class="input-group">
           <button
             class="btn-cantidad btn-decrementar"
@@ -51,36 +61,61 @@
 
         <p>Precio Total: {{ productoSeleccionado.precioTotal }}</p>
         <div class="botones">
-          <button style="background-color: red;" (click)="cerrarModal()">Cerrar</button>
-        <button style="background-color: green;" [disabled]="habilitar" type="button" class="btn btn-success" (click)="registrarProducto()">Registrar</button>
+          <button style="background-color: red" (click)="cerrarModal()">
+            Cerrar
+          </button>
+          <button
+            style="background-color: green"
+            [disabled]="habilitar"
+            type="button"
+            class="btn btn-success"
+            (click)="registrarProducto()"
+          >
+            Agregar
+          </button>
         </div>
       </div>
     </div>
   </div>
   <table class="table table-striped">
-  <thead>
-    <tr>
-      <th scope="col">Nombre</th>
-      <th scope="col">Cantidad</th>
-      <th scope="col">SubTotal</th>
-      <th scope="col">Acciones</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let producto of productosRegistrados">
-      <td>{{ producto.nombre }}</td>
-      <td>{{ producto.cantidad }}</td>
-      <td>{{ producto.precio }}</td>
-      <td>{{ producto.precioTotal }}</td>
-      <td><button class="btn btn-danger" (click)="eliminarProducto(producto)">Eliminar</button></td>
-    </tr>
-  </tbody>
-      <tfoot *ngIf="productosRegistrados.length !== 0">
+    <thead>
       <tr>
-        <th colspan="3">Total:</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Cantidad</th>
+        <th scope="col">SubTotal</th>
+        <th scope="col">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let producto of productosRegistrados">
+        <td>{{ producto.nombre }}</td>
+        <td>{{ producto.cantidad }}</td>
+        <td>{{ producto.precioTotal }}</td>
+        <td>
+          <button class="btn btn-danger" (click)="eliminarProducto(producto)">
+            Eliminar
+          </button>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot *ngIf="productosRegistrados.length !== 0">
+      <tr style="background-color: #0014ff2b">
+        <th>Total:</th>
         <th>$ {{ calcularTotal() }}</th>
-        <th><button class="btn btn-danger" (click)="borrarTabla()">Borrar todo</button></th>
+        <th>
+          <button class="btn btn-success" (click)="borrarTabla()">
+            Registrar
+          </button>
+        </th>
+        <th>
+          <button class="btn btn-danger" (click)="borrarTabla()">
+            Borrar todo
+          </button>
+        </th>
       </tr>
     </tfoot>
-</table>
+    <p *ngIf="productosRegistrados.length == 0">
+      No hay productos seleccionados
+    </p>
+  </table>
 </div>

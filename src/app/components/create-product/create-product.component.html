@@ -1,0 +1,87 @@
+<div>
+  <div>
+    <h3>Crear Producto</h3>
+  </div>
+  <div>
+    <span>LLENAR LOS CAMPOS SON OLIGATORIOS</span>
+  </div>
+  <div>
+    <form [formGroup]="createProduct" (ngSubmit)="agregarEditarProducto()">
+      <div class="container-form">
+        <div class="container-element">
+          <label
+            >* Nombre
+            <input
+              type="text"
+              class="form-control mt-2 text-center"
+              placeholder="Nombre del producto"
+              formControlName="nombre"
+            />
+          </label>
+        </div>
+        <div class="container-element">
+          <label
+            >Descripción
+            <input
+              type="text"
+              class="form-control mt-2 text-center"
+              placeholder="Descripción"
+              formControlName="descripcion"
+            />
+          </label>
+        </div>
+        <div class="container-element">
+          <label
+            >* Precio de compra
+            <input
+              type="number"
+              class="form-control mt-2 text-center"
+              placeholder="precio de compra"
+              formControlName="precioCompra"
+            />
+          </label>
+        </div>
+        <div class="container-element">
+          <label
+            >* Precio de venta
+            <input
+              type="number"
+              class="form-control mt-2 text-center"
+              placeholder="precio de venta"
+              formControlName="precioVenta"
+            />
+          </label>
+        </div>
+        <div class="container-element">
+          <label
+            >Imagen
+            <input
+              value="https://media.istockphoto.com/id/1162198273/es/vector/dise%C3%B1o-de-ilustraci%C3%B3n-vectorial-plana-icono-de-signo-de-interrogaci%C3%B3n.jpg?s=1024x1024&w=is&k=20&c=pZBCbPrSZDpGfF0OzRN78BeLUIJbiWaRxeKVO2TG7sA="
+              type="text"
+              class="form-control mt-2 text-center"
+              placeholder="url de imagen"
+              formControlName="imagenes"
+            />
+          </label>
+        </div>
+        <div class="container-element">
+          <label
+            >* Disponible
+            <input
+              type="text"
+              class="form-control mt-2 text-center"
+              placeholder="Disponible"
+              formControlName="disponible"
+            />
+          </label>
+        </div>
+        <div class="container-element">
+          <button type="submit">Aceptar</button>
+        </div>
+        <div class="container-element">
+          <button routerLink="/info-product">Volver</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
