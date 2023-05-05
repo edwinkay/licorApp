@@ -52,7 +52,9 @@ export class CreateProductComponent implements OnInit {
       nombre: this.createProduct.value.nombre,
       descripcion: this.createProduct.value.descripcion,
       precioCompra: this.createProduct.value.precioCompra,
-      precioVenta: this.createProduct.value.precioVenta,
+      precio: this.createProduct.value.precioVenta,
+      cantidad: 0,
+      precioTotal: 0,
       imagenes: this.createProduct.value.imagenes,
       disponible: this.createProduct.value.disponible,
     };
