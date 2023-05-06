@@ -100,6 +100,8 @@ export class ListProductsComponent implements OnInit {
     this.enabledButton = false;
     this.modalActivo = false;
     this.productoSeleccionado.cantidad = 0;
+    this.valorRestado = null;
+    this.resultado = 0;
   }
   incrementarCantidad() {
     this.habilitar = false;
@@ -183,6 +185,8 @@ export class ListProductsComponent implements OnInit {
     this.getProducts();
     this.productosRegistrados = [];
     this.toastr.error('Todos los productos fueron eliminados', 'Eliminados');
+    this.valorRestado = null;
+    this.resultado = 0;
   }
   calcularTotal() {
     let total = 0;
@@ -195,6 +199,10 @@ export class ListProductsComponent implements OnInit {
     this.registrarActivo = true;
   }
   restarValor(){
-
+    if (this.valorRestado >= this.calcularTotal()) {
+      this.resultado = Math.abs(this.calcularTotal() - this.valorRestado);
+    }else{
+      this.resultado = 0
+    }
   }
 }
