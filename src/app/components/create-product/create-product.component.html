@@ -1,6 +1,6 @@
 <div style="display: flex; flex-direction: column; align-items: center">
   <div>
-    <h2>Crear Producto</h2>
+    <h2>{{ titleChange }}</h2>
   </div>
   <div>
     <form [formGroup]="createProduct" (ngSubmit)="agregarEditarProducto()">
@@ -45,7 +45,7 @@
               type="number"
               class="form-control mt-2 text-center"
               placeholder="precio de venta"
-              formControlName="precioVenta"
+              formControlName="precio"
             />
           </label>
         </div>
@@ -53,8 +53,8 @@
           <label
             >Imagen
             <input
-              value="https://media.istockphoto.com/id/1162198273/es/vector/dise%C3%B1o-de-ilustraci%C3%B3n-vectorial-plana-icono-de-signo-de-interrogaci%C3%B3n.jpg?s=1024x1024&w=is&k=20&c=pZBCbPrSZDpGfF0OzRN78BeLUIJbiWaRxeKVO2TG7sA="
               type="text"
+              [(ngModel)]="urlImagen"
               class="form-control mt-2 text-center"
               placeholder="url de imagen"
               formControlName="imagenes"
@@ -65,7 +65,7 @@
           <label
             >* Disponible
             <input
-              type="text"
+              type="number"
               class="form-control mt-2 text-center"
               placeholder="Disponible"
               formControlName="disponible"
@@ -91,7 +91,7 @@
             </button>
           </div>
         </div>
-        <div style="color: red" *ngIf="subbmited">
+        <div style="color: red" *ngIf="subbmited && createProduct.invalid">
           Los campos con * son obligatorios
         </div>
       </div>

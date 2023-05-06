@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductsService } from 'src/app/services/products.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-list-products',
@@ -14,7 +15,7 @@ export class ListProductsComponent implements OnInit {
   enabledButton = false;
   maxCantidad: any;
   habilitar = true;
-  products: any [] = []
+  products: any[] = [];
 
   // products = [
   //   {
@@ -39,12 +40,15 @@ export class ListProductsComponent implements OnInit {
   //   },
   // ];
 
-  constructor(private _productService: ProductsService) {}
+  constructor(
+    private _productService: ProductsService,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit(): void {
-    this.getProducts()
+    this.getProducts();
   }
-  getProducts(){
+  getProducts() {
     this._productService.getProducts().subscribe((data) => {
       this.products = [];
       data.forEach((element: any) => {
@@ -136,6 +140,10 @@ export class ListProductsComponent implements OnInit {
     const index = this.productosRegistrados.indexOf(producto);
     if (index > -1) {
       this.productosRegistrados.splice(index, 1);
+      this.toastr.error(
+        'El producto fue eliminado con exito',
+        'Producto eliminado'
+      );
     }
     const productoEncontrado = this.products.find(
       (producto) => producto.nombre === this.productoSeleccionado.nombre
@@ -147,6 +155,7 @@ export class ListProductsComponent implements OnInit {
   borrarTabla() {
     this.getProducts();
     this.productosRegistrados = [];
+    this.toastr.error('Todos los productos fueron eliminados', 'Eliminados');
   }
   calcularTotal() {
     let total = 0;

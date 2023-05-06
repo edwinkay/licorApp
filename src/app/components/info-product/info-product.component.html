@@ -41,15 +41,42 @@
         <div style="display: flex; justify-content: space-evenly">
           <div>
             <i
+              style="cursor: pointer"
               class="fas fa-edit fa-lg text-info"
               [routerLink]="['/edit-product/', producto.id]"
             ></i>
           </div>
           <div>
             <i
-              (click)="eliminarProducto(producto.id)"
+              style="cursor: pointer"
+              (click)="abrirModalEliminar(producto.id)"
               class="fas fa-trash-alt fa-lg text-danger"
             ></i>
+            <div class="modal" *ngIf="modalActivoEliminar">
+              <div class="contenido-modal">
+                <p>¿estas seguro que deseas eliminar este producto?</p>
+                <div
+                  style="display: flex; gap: 8px; justify-content: center"
+                  class="botones"
+                >
+                  <button
+                    class="btn btn-danger"
+                    style="background-color: blue"
+                    (click)="cerrarModalEliminar()"
+                  >
+                    Cerrar
+                  </button>
+                  <button
+                    style="background-color: red"
+                    type="button"
+                    class="btn btn-success"
+                    (click)="eliminarProducto2()"
+                  >
+                    Eliminar
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </td>

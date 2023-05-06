@@ -11,11 +11,16 @@ export class ProductsService {
   getProducts(): Observable<any> {
     return this.firestore.collection('productos').snapshotChanges();
   }
-
+  getProducto(id: string): Observable<any> {
+    return this.firestore.collection('productos').doc(id).snapshotChanges();
+  }
   agregarproducto(producto: any): Promise<any> {
     return this.firestore.collection('productos').add(producto);
   }
   deleteProducts(id: string): Promise<any> {
     return this.firestore.collection('productos').doc(id).delete();
+  }
+  update(id: string, data: any): Promise<any> {
+    return this.firestore.collection('productos').doc(id).update(data);
   }
 }

@@ -22,6 +22,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { CreateProductComponent } from './components/create-product/create-product.component';
 import { InfoProductComponent } from './components/info-product/info-product.component';
+import { ToastrModule } from 'ngx-toastr';
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,6 +43,11 @@ import { InfoProductComponent } from './components/info-product/info-product.com
     MatListModule,
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase),
+    ToastrModule.forRoot({
+    timeOut: 4000,
+    positionClass: 'toast-bottom-right',
+    preventDuplicates: true,
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent],
