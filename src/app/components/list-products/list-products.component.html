@@ -1,5 +1,5 @@
 <div class="table-responsive">
-  <div style="display: flex;">
+  <div style="display: flex">
     <div *ngFor="let producto of products">
       <div class="producto" (click)="abrirModal(producto)">
         <img
@@ -103,9 +103,44 @@
         <th>Total:</th>
         <th>$ {{ calcularTotal() }}</th>
         <th>
-          <button class="btn btn-success" (click)="borrarTabla()">
-            Registrar
+          <button class="btn btn-success" (click)="modalRegistrar()">
+            Agregar Reporte
           </button>
+          <div class="modal" *ngIf="registrarActivo">
+            <div class="contenido-modal">
+              <span style="    margin-bottom: 14px;">Agregar nuevo reporte</span>
+              <div style="display: contents">
+                <span>Total a pagar: </span>
+                <p>
+                  {{ calcularTotal() | currency : "USD" : "symbol" : "1.0" }}
+                </p>
+                <p>Devuelta: xxx</p>
+                <label>
+                  <input
+                    [(ngModel)]="valorRestado"
+                    (ngModelChange)="restarValor()"
+                    type="number"
+                  />
+                </label>
+              </div>
+              <div style="gap: 7px; display: flex">
+                <button
+                  class="btn btn-danger"
+                  style="background-color: blue"
+                  (click)="cerrarModal()"
+                >
+                  Cerrar
+                </button>
+                <button
+                  style="background-color: green"
+                  type="button"
+                  class="btn btn-success"
+                >
+                  Crear
+                </button>
+              </div>
+            </div>
+          </div>
         </th>
         <th>
           <button class="btn btn-danger" (click)="borrarTabla()">

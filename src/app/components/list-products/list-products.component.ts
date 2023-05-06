@@ -16,6 +16,10 @@ export class ListProductsComponent implements OnInit {
   maxCantidad: any;
   habilitar = true;
   products: any[] = [];
+  registrarActivo = false;
+
+  valorRestado: any;
+  resultado: number = 0;
 
   // products = [
   //   {
@@ -56,7 +60,6 @@ export class ListProductsComponent implements OnInit {
           id: element.payload.doc.id,
           ...element.payload.doc.data(),
         });
-        console.log(this.products);
       });
     });
   }
@@ -93,6 +96,7 @@ export class ListProductsComponent implements OnInit {
     }
   }
   cerrarModal() {
+    this.registrarActivo = false;
     this.enabledButton = false;
     this.modalActivo = false;
     this.productoSeleccionado.cantidad = 0;
@@ -124,17 +128,40 @@ export class ListProductsComponent implements OnInit {
     }
   }
   registrarProducto() {
-    const { nombre, cantidad, precioTotal } = this.productoSeleccionado;
+    let {
+      nombre,
+      cantidad,
+      descripcion,
+      disponible,
+      imagenes,
+      precio,
+      precioCompra,
+      precioTotal,
+    } = this.productoSeleccionado;
     const productoEncontrado = this.products.find(
       (producto) => producto.nombre === nombre
     );
     if (productoEncontrado) {
       productoEncontrado.disponible -= cantidad;
+      disponible = productoEncontrado.disponible;
     }
-    this.productosRegistrados.push({ nombre, cantidad, precioTotal });
+    const total = this.calcularTotal();
+    this.productosRegistrados.push({
+      nombre,
+      cantidad,
+      descripcion,
+      disponible,
+      imagenes,
+      precio,
+      precioCompra,
+      precioTotal,
+      total,
+    });
     this.modalActivo = false;
     this.enabledButton = false;
     this.productoSeleccionado.cantidad = 0;
+    console.log('productos resgistrados', this.productosRegistrados);
+    console.log(this.calcularTotal());
   }
   eliminarProducto(producto: any) {
     const index = this.productosRegistrados.indexOf(producto);
@@ -163,5 +190,11 @@ export class ListProductsComponent implements OnInit {
       total += producto.precioTotal;
     });
     return total;
+  }
+  modalRegistrar() {
+    this.registrarActivo = true;
+  }
+  restarValor(){
+
   }
 }
