@@ -1,27 +1,23 @@
-<div>
+<div style="margin: 6px;">
   <div>
     <h3>REPORTES</h3>
   </div>
-  <table>
+  <table class="table table-striped">
     <thead>
+      <th class="col">Fecha</th>
       <th class="col">Nombre</th>
-      <th class="col">precio</th>
-      <th class="col">disponible</th>
-      <th class="col">cantidad</th>
+      <th class="col">Total</th>
     </thead>
     <tbody>
       <tr *ngFor="let reporte of reportes">
         <td>
+          {{reporte.fechaCreacion}}
+        </td>
+        <td>
           {{reporte.nombre}}
         </td>
         <td>
-          {{reporte.precio}}
-        </td>
-        <td>
-          {{reporte.total}}
-        </td>
-        <td>
-          {{reporte.cantidad}}
+          {{reporte.total | currency : "USD" : "symbol" : "1.0"}}
         </td>
       </tr>
     </tbody>

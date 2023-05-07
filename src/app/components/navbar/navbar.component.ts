@@ -8,7 +8,14 @@ import { MatSidenav } from '@angular/material/sidenav';
 })
 export class NavbarComponent implements OnInit {
   @ViewChild('drawer') drawer!: MatSidenav;
+  modal = false
   constructor() {}
 
   ngOnInit(): void {}
+  abrir(){
+    this.modal = true;
+  }
+  cerrar(){
+    this.modal = false
+  }
 }

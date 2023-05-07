@@ -9,6 +9,7 @@ import { ReportesService } from 'src/app/services/reportes.service';
 export class ReportesComponent implements OnInit {
 
   reportes: any[] = [];
+  reports: any[] = [];
 
   constructor(private _reportes: ReportesService) { }
 
@@ -23,7 +24,14 @@ export class ReportesComponent implements OnInit {
           ...element.payload.doc.data(),
         });
       })
-      console.log(this.reportes);
+            for (const item of this.reportes) {
+              const timestamp = item.fechaCreacion;
+              const milliseconds =
+                timestamp.seconds * 1000 + timestamp.nanoseconds / 1000000;
+                const date = new Date(milliseconds);
+                const formattedDate = date.toLocaleString();
+               item.fechaCreacion = formattedDate;
+            }
     })
   }
 

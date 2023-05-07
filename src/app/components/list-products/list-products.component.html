@@ -9,7 +9,8 @@
           height="100"
         />
         <h3 style="text-align: center;">{{ producto.nombre }}</h3>
-        <p>{{producto.descripcion}}</p>
+        <p>{{producto.precio | currency : "USD" : "symbol" : "3.0"}}</p>
+        <p style="text-align: center;">{{producto.descripcion}}</p>
         <p>
           Disponible:
           {{ producto.disponible ? producto.disponible : "No disponible" }}
