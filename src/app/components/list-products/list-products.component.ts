@@ -63,6 +63,7 @@ export class ListProductsComponent implements OnInit {
           ...element.payload.doc.data(),
         });
       });
+      console.log(this.products)
     });
   }
 
@@ -133,6 +134,7 @@ export class ListProductsComponent implements OnInit {
   }
   registrarProducto() {
     let {
+      id,
       nombre,
       cantidad,
       descripcion,
@@ -150,6 +152,7 @@ export class ListProductsComponent implements OnInit {
       disponible = productoEncontrado.disponible;
     }
     this.productosRegistrados.push({
+      id,
       nombre,
       cantidad,
       descripcion,
@@ -196,30 +199,30 @@ export class ListProductsComponent implements OnInit {
   modalRegistrar() {
     this.registrarActivo = true;
   }
-  restarValor(){
+  restarValor() {
     if (this.valorRestado >= this.calcularTotal()) {
       this.resultado = Math.abs(this.calcularTotal() - this.valorRestado);
-    }else{
-      this.resultado = 0
+    } else {
+      this.resultado = 0;
     }
   }
-  agregarReporte(){
-    const nombres = this.productosRegistrados.map(n => n.nombre)
-    const cantidades = this.productosRegistrados.map(n => n.cantidad)
-    const disponibles = this.productosRegistrados.map(n => n.disponible)
-    const descripciones = this.productosRegistrados.map(n => n.descripcion)
-    const precios = this.productosRegistrados.map(n => n.precio)
-    const precioCompras = this.productosRegistrados.map(p => p.precioCompra)
-    const precioTotal = this.productosRegistrados.map(p => p.precioTotal)
+  agregarReporte() {
+    this._productService.updateProducts(this.productosRegistrados).then(() => {
+      console.log('productos actualizados');
+    });
+    console.log(this.productosRegistrados);
 
-    // const productoEncontrado = this.products.find(
-    //   (producto) => producto.nombre === this.productoSeleccionado.nombre
-    // );
-    // if (productoEncontrado) {
-    //   productoEncontrado.disponible -= this.productoSeleccionado.cantidad;
-    //   this.productoSeleccionado.disponible = productoEncontrado.disponible;
-    // }
-    const rpt:any = {
+
+    const id = this.productosRegistrados.map((n) => n.id);
+    const nombres = this.productosRegistrados.map((n) => n.nombre);
+    const cantidades = this.productosRegistrados.map((n) => n.cantidad);
+    const disponibles = this.productosRegistrados.map((n) => n.disponible);
+    const descripciones = this.productosRegistrados.map((n) => n.descripcion);
+    const precios = this.productosRegistrados.map((n) => n.precio);
+    const precioCompras = this.productosRegistrados.map((p) => p.precioCompra);
+    const precioTotal = this.productosRegistrados.map((p) => p.precioTotal);
+
+    const rpt: any = {
       nombre: nombres,
       cantidad: cantidades,
       descripcion: descripciones,
@@ -229,13 +232,12 @@ export class ListProductsComponent implements OnInit {
       precioTotal: precioTotal,
       total: this.calcularTotal(),
       fechaCreacion: new Date(),
-    }
+    };
     this._reportes.addReport(rpt).then(() => {
       this.toastr.success('Registrado con exito', 'Reporte Registrado!!');
       this.productosRegistrados = [];
-      this.registrarActivo = false
-    })
-    console.log('reporte', rpt)
-    console.log('productos resgistrados', this.productosRegistrados);
+      this.registrarActivo = false;
+    });
+    this.getProducts()
   }
 }

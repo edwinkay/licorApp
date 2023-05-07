@@ -1,16 +1,20 @@
 <div class="table-responsive">
-  <div style="display: flex">
+  <div style="display: flex; flex-wrap: wrap; justify-content: space-evenly;">
     <div *ngFor="let producto of products">
-      <div class="producto" (click)="abrirModal(producto)">
+      <div
+        style="border: 1px solid #8080802e; border-radius: 6px; margin: 2px"
+        class="producto"
+        (click)="abrirModal(producto)"
+      >
         <img
           [src]="producto.imagenes"
           alt="Imagen no disponible"
           width="100"
           height="100"
         />
-        <h3 style="text-align: center;">{{ producto.nombre }}</h3>
-        <p>{{producto.precio | currency : "USD" : "symbol" : "3.0"}}</p>
-        <p style="text-align: center;">{{producto.descripcion}}</p>
+        <h3 style="text-align: center">{{ producto.nombre }}</h3>
+        <p>${{ producto.precio | currency : " " : "symbol" : "1.0" }}</p>
+        <p style="text-align: center">{{ producto.descripcion }}</p>
         <p>
           Disponible:
           {{ producto.disponible ? producto.disponible : "No disponible" }}
@@ -110,13 +114,13 @@
           </button>
           <div class="modal" *ngIf="registrarActivo">
             <div class="contenido-modal">
-              <span style="    margin-bottom: 14px;">Agregar nuevo reporte</span>
+              <span style="margin-bottom: 14px">Agregar nuevo reporte</span>
               <div style="display: contents">
                 <span>Total a pagar: </span>
                 <p>
-                  {{ calcularTotal() | currency : "USD" : "symbol" : "1.0" }}
+                  ${{ calcularTotal() | currency : " " : "symbol" : "1.0" }}
                 </p>
-                <p>Devuelta: ${{resultado}}</p>
+                <p>Devuelta: ${{ resultado }}</p>
                 <label>
                   <input
                     [(ngModel)]="valorRestado"
@@ -152,7 +156,7 @@
         </th>
       </tr>
     </tfoot>
-    <p *ngIf="productosRegistrados.length == 0">
+    <p style="margin: 6px" *ngIf="productosRegistrados.length == 0">
       No hay productos seleccionados
     </p>
   </table>

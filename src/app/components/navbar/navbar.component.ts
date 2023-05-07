@@ -8,14 +8,19 @@ import { MatSidenav } from '@angular/material/sidenav';
 })
 export class NavbarComponent implements OnInit {
   @ViewChild('drawer') drawer!: MatSidenav;
-  modal = false
+  modal = false;
+  today = new Date();
   constructor() {}
 
-  ngOnInit(): void {}
-  abrir(){
+  ngOnInit(): void {
+    setInterval(() => {
+      this.today = new Date(); // actualiza la fecha actual cada segundo
+    }, 1000);
+  }
+  abrir() {
     this.modal = true;
   }
-  cerrar(){
-    this.modal = false
+  cerrar() {
+    this.modal = false;
   }
 }

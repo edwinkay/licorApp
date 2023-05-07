@@ -1,4 +1,6 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
+import localeEs from '@angular/common/locales/es';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 
@@ -24,6 +26,8 @@ import { CreateProductComponent } from './components/create-product/create-produ
 import { InfoProductComponent } from './components/info-product/info-product.component';
 import { ToastrModule } from 'ngx-toastr';
 import { ReportesComponent } from './components/reportes/reportes.component';
+
+registerLocaleData(localeEs);
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,12 +50,12 @@ import { ReportesComponent } from './components/reportes/reportes.component';
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     ToastrModule.forRoot({
-    timeOut: 4000,
-    positionClass: 'toast-bottom-right',
-    preventDuplicates: true,
+      timeOut: 4000,
+      positionClass: 'toast-bottom-right',
+      preventDuplicates: true,
     }),
   ],
-  providers: [],
+  providers: [{ provide: LOCALE_ID, useValue: 'es' }],
   bootstrap: [AppComponent],
   exports: [MatToolbarModule],
 })

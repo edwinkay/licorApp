@@ -23,4 +23,14 @@ export class ProductsService {
   update(id: string, data: any): Promise<any> {
     return this.firestore.collection('productos').doc(id).update(data);
   }
+  updateProducts(products: any[]): Promise<void> {
+    const batch = this.firestore.firestore.batch();
+
+    products.forEach((product) => {
+      const docRef = this.firestore.collection('productos').doc(product.id);
+      batch.update(docRef.ref, product);
+    });
+
+    return batch.commit();
+  }
 }
