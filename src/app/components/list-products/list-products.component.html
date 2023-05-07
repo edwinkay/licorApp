@@ -8,7 +8,8 @@
           width="100"
           height="100"
         />
-        <h3>{{ producto.nombre }}</h3>
+        <h3 style="text-align: center;">{{ producto.nombre }}</h3>
+        <p>{{producto.descripcion}}</p>
         <p>
           Disponible:
           {{ producto.disponible ? producto.disponible : "No disponible" }}
@@ -132,6 +133,7 @@
                   Cerrar
                 </button>
                 <button
+                  (click)="agregarReporte()"
                   style="background-color: green"
                   type="button"
                   class="btn btn-success"

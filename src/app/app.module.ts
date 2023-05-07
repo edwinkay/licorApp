@@ -23,6 +23,7 @@ import { MatListModule } from '@angular/material/list';
 import { CreateProductComponent } from './components/create-product/create-product.component';
 import { InfoProductComponent } from './components/info-product/info-product.component';
 import { ToastrModule } from 'ngx-toastr';
+import { ReportesComponent } from './components/reportes/reportes.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,6 +31,7 @@ import { ToastrModule } from 'ngx-toastr';
     NavbarComponent,
     CreateProductComponent,
     InfoProductComponent,
+    ReportesComponent,
   ],
   imports: [
     BrowserModule,

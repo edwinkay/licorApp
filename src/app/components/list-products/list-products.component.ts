@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductsService } from 'src/app/services/products.service';
 import { ToastrService } from 'ngx-toastr';
+import { ReportesService } from 'src/app/services/reportes.service';
 
 @Component({
   selector: 'app-list-products',
@@ -46,6 +47,7 @@ export class ListProductsComponent implements OnInit {
 
   constructor(
     private _productService: ProductsService,
+    private _reportes: ReportesService,
     private toastr: ToastrService
   ) {}
 
@@ -147,7 +149,6 @@ export class ListProductsComponent implements OnInit {
       productoEncontrado.disponible -= cantidad;
       disponible = productoEncontrado.disponible;
     }
-    const total = this.calcularTotal();
     this.productosRegistrados.push({
       nombre,
       cantidad,
@@ -157,13 +158,10 @@ export class ListProductsComponent implements OnInit {
       precio,
       precioCompra,
       precioTotal,
-      total,
     });
     this.modalActivo = false;
     this.enabledButton = false;
     this.productoSeleccionado.cantidad = 0;
-    console.log('productos resgistrados', this.productosRegistrados);
-    console.log(this.calcularTotal());
   }
   eliminarProducto(producto: any) {
     const index = this.productosRegistrados.indexOf(producto);
@@ -204,5 +202,40 @@ export class ListProductsComponent implements OnInit {
     }else{
       this.resultado = 0
     }
+  }
+  agregarReporte(){
+    const nombres = this.productosRegistrados.map(n => n.nombre)
+    const cantidades = this.productosRegistrados.map(n => n.cantidad)
+    const disponibles = this.productosRegistrados.map(n => n.disponible)
+    const descripciones = this.productosRegistrados.map(n => n.descripcion)
+    const precios = this.productosRegistrados.map(n => n.precio)
+    const precioCompras = this.productosRegistrados.map(p => p.precioCompra)
+    const precioTotal = this.productosRegistrados.map(p => p.precioTotal)
+
+    // const productoEncontrado = this.products.find(
+    //   (producto) => producto.nombre === this.productoSeleccionado.nombre
+    // );
+    // if (productoEncontrado) {
+    //   productoEncontrado.disponible -= this.productoSeleccionado.cantidad;
+    //   this.productoSeleccionado.disponible = productoEncontrado.disponible;
+    // }
+    const rpt:any = {
+      nombre: nombres,
+      cantidad: cantidades,
+      descripcion: descripciones,
+      disponible: disponibles,
+      precio: precios,
+      precioCompra: precioCompras,
+      precioTotal: precioTotal,
+      total: this.calcularTotal(),
+      fechaCreacion: new Date(),
+    }
+    this._reportes.addReport(rpt).then(() => {
+      this.toastr.success('Registrado con exito', 'Reporte Registrado!!');
+      this.productosRegistrados = [];
+      this.registrarActivo = false
+    })
+    console.log('reporte', rpt)
+    console.log('productos resgistrados', this.productosRegistrados);
   }
 }

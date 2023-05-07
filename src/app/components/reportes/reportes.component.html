@@ -1,0 +1,29 @@
+<div>
+  <div>
+    <h3>REPORTES</h3>
+  </div>
+  <table>
+    <thead>
+      <th class="col">Nombre</th>
+      <th class="col">precio</th>
+      <th class="col">disponible</th>
+      <th class="col">cantidad</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let reporte of reportes">
+        <td>
+          {{reporte.nombre}}
+        </td>
+        <td>
+          {{reporte.precio}}
+        </td>
+        <td>
+          {{reporte.total}}
+        </td>
+        <td>
+          {{reporte.cantidad}}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
