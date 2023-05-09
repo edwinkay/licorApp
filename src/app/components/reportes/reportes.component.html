@@ -1,3 +1,4 @@
+<app-navbar></app-navbar>
 <div style="margin: 6px;">
   <div>
     <h3>REPORTES</h3>
@@ -14,11 +15,23 @@
           {{reporte.fechaCreacion}}
         </td>
         <td>
-          {{reporte.nombre}}
+          {{ countOccurrences(reporte.nombre).join(', ') }}
         </td>
         <td>
           ${{reporte.total | currency : " " : "symbol" : "1.0"}}
         </td>
+      </tr>
+    </tbody>
+  </table>
+  <table class="table table-striped">
+    <thead>
+      <th class="col">Ganacia Obtenida</th>
+      <th class="col">Total ventas</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>${{gananciaObtenida | currency : " " : "symbol" : "1.0"}}</td>
+        <td>${{totalVentas | currency : " " : "symbol" : "1.0"}}</td>
       </tr>
     </tbody>
   </table>

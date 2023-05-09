@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ProductsService } from 'src/app/services/products.service';
 import { ToastrService } from 'ngx-toastr';
 import { ReportesService } from 'src/app/services/reportes.service';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list-products',
@@ -22,37 +24,26 @@ export class ListProductsComponent implements OnInit {
   valorRestado: any;
   resultado: number = 0;
 
-  // products = [
-  //   {
-  //     nombre: 'Aguardiente caucano',
-  //     descripcion: 'tradicional',
-  //     precio: 16500,
-  //     cantidad: 0,
-  //     precioTotal: 0,
-  //     imagen:
-  //       'https://olimpica.vtexassets.com/arquivos/ids/735687-800-auto?v=637782321904170000&width=800&height=auto&aspect=true',
-  //     disponible: 10,
-  //   },
-  //   {
-  //     nombre: 'Ron',
-  //     descripcion: 'Viejo de caldas',
-  //     precio: 22500,
-  //     cantidad: 0,
-  //     precioTotal: 0,
-  //     imagen:
-  //       'https://d2j6dbq0eux0bg.cloudfront.net/images/30491376/1511186234.jpg',
-  //     disponible: 5,
-  //   },
-  // ];
+  dataUser: any;
 
   constructor(
+    private afAuth: AngularFireAuth,
     private _productService: ProductsService,
     private _reportes: ReportesService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     this.getProducts();
+    this.afAuth.currentUser.then((data) => {
+      if (data) {
+        console.log('Correo:', data.email);
+        this.dataUser = data;
+      } else {
+        this.router.navigate(['/login']);
+      }
+    });
   }
   getProducts() {
     this._productService.getProducts().subscribe((data) => {
@@ -63,7 +54,7 @@ export class ListProductsComponent implements OnInit {
           ...element.payload.doc.data(),
         });
       });
-      console.log(this.products)
+      console.log(this.products);
     });
   }
 
@@ -82,6 +73,7 @@ export class ListProductsComponent implements OnInit {
   abrirModal(producto: any) {
     this.habilitar = true;
     this.productoSeleccionado = producto;
+    this.productoSeleccionado.cantidad = 0;
     const productoEncontrado = this.products.find(
       (producto) => producto.nombre == this.productoSeleccionado.nombre
     );
@@ -212,7 +204,6 @@ export class ListProductsComponent implements OnInit {
     });
     console.log(this.productosRegistrados);
 
-
     const id = this.productosRegistrados.map((n) => n.id);
     const nombres = this.productosRegistrados.map((n) => n.nombre);
     const cantidades = this.productosRegistrados.map((n) => n.cantidad);
@@ -238,6 +229,7 @@ export class ListProductsComponent implements OnInit {
       this.productosRegistrados = [];
       this.registrarActivo = false;
     });
-    this.getProducts()
+    this.getProducts();
+    this.productoSeleccionado = null;
   }
 }

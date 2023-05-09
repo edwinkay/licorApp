@@ -4,14 +4,21 @@ import { ListProductsComponent } from './components/list-products/list-products.
 import { CreateProductComponent } from './components/create-product/create-product.component';
 import { InfoProductComponent } from './components/info-product/info-product.component';
 import { ReportesComponent } from './components/reportes/reportes.component';
+import { LoginFormComponent } from './components/login-form/login-form.component';
+import { RecuperarContrasenaComponent } from './components/recuperar-contrasena/recuperar-contrasena.component';
+import { RegistrarUsuarioComponent } from './components/registrar-usuario/registrar-usuario.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'list-products', pathMatch: 'full' },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'list-products', component: ListProductsComponent },
   { path: 'create-product', component: CreateProductComponent },
   { path: 'edit-product/:id', component: CreateProductComponent },
   { path: 'info-product', component: InfoProductComponent },
   { path: 'reportes', component: ReportesComponent },
+  { path: 'login', component: LoginFormComponent },
+  { path: 'recuperar', component: RecuperarContrasenaComponent },
+  { path: 'registrar', component: RegistrarUsuarioComponent },
+  { path: '**', redirectTo: 'login', pathMatch: 'full'},
 ];
 
 @NgModule({

@@ -1,0 +1,42 @@
+<div>
+  <div style="margin-top: 8%">
+    <form class="login-form" (ngSubmit)="recuperar()" [formGroup]="recuperarUsuario">
+      <h2 class="form-title">RECUPERAR CUENTA</h2>
+      <div class="form-group">
+        <input
+          type="email"
+          name="email"
+          placeholder="Correo electrónico"
+          formControlName="email"
+        />
+        <span
+          *ngIf="
+            recuperarUsuario.get('email')?.hasError('required') &&
+            recuperarUsuario.get('email')?.touched
+          "
+          class="text-danger errorLabel"
+          >El <strong>correo </strong>es requerido</span
+        >
+        <span
+          *ngIf="
+            recuperarUsuario.get('email')?.hasError('email') &&
+            recuperarUsuario.get('email')?.touched
+          "
+          class="text-danger errorLabel"
+          >El <strong>correo </strong>es invalido</span
+        >
+      </div>
+      <div style="display: flex; gap: 2px">
+        <button
+          style="background-color: blue"
+          type="button"
+          routerLink="/login"
+          class="submit-button"
+        >
+          Volver
+        </button>
+        <button [disabled]="recuperarUsuario.invalid" type="submit" class="submit-button">Aceptar</button>
+      </div>
+    </form>
+  </div>
+</div>

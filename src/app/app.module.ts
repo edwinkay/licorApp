@@ -26,6 +26,9 @@ import { CreateProductComponent } from './components/create-product/create-produ
 import { InfoProductComponent } from './components/info-product/info-product.component';
 import { ToastrModule } from 'ngx-toastr';
 import { ReportesComponent } from './components/reportes/reportes.component';
+import { LoginFormComponent } from './components/login-form/login-form.component';
+import { RegistrarUsuarioComponent } from './components/registrar-usuario/registrar-usuario.component';
+import { RecuperarContrasenaComponent } from './components/recuperar-contrasena/recuperar-contrasena.component';
 
 registerLocaleData(localeEs);
 @NgModule({
@@ -36,6 +39,9 @@ registerLocaleData(localeEs);
     CreateProductComponent,
     InfoProductComponent,
     ReportesComponent,
+    LoginFormComponent,
+    RegistrarUsuarioComponent,
+    RecuperarContrasenaComponent,
   ],
   imports: [
     BrowserModule,
