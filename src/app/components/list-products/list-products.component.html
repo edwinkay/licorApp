@@ -33,7 +33,7 @@
         />
         <h3>{{ productoSeleccionado.nombre }}</h3>
         <p>Descripción: {{ productoSeleccionado.descripcion }}</p>
-        <p>Precio: {{ productoSeleccionado.precio }}</p>
+        <p>Precio: ${{ productoSeleccionado.precio | currency : " " : "symbol" : "1.0"}}</p>
         <p>
           Disponible:
           {{
@@ -66,7 +66,7 @@
           </button>
         </div>
 
-        <p>Precio Total: {{ productoSeleccionado.precioTotal }}</p>
+        <p>Precio Total: ${{ productoSeleccionado.precioTotal | currency : " " : "symbol" : "1.0"}}</p>
         <div class="botones">
           <button style="background-color: red" (click)="cerrarModal()">
             Cerrar
@@ -97,7 +97,7 @@
       <tr *ngFor="let producto of productosRegistrados">
         <td>{{ producto.nombre }}</td>
         <td>{{ producto.cantidad }}</td>
-        <td>{{ producto.precioTotal }}</td>
+        <td>$ {{ producto.precioTotal | currency : " " : "symbol" : "1.0" }}</td>
         <td>
           <button class="btn btn-danger" (click)="eliminarProducto(producto)">
             Eliminar

@@ -12,6 +12,8 @@ export class ReportesService {
     return this.firestore.collection('reportes').add(producto);
   }
   obtReports(): Observable<any> {
-    return this.firestore.collection('reportes').snapshotChanges();
+    return this.firestore
+      .collection('reportes', (ref) => ref.orderBy('fechaCreacion', 'desc'))
+      .snapshotChanges();
   }
 }

@@ -58,6 +58,7 @@
         >
       </div>
       <button type="submit" class="submit-button" [disabled]="loginUsuario.invalid" >Iniciar sesión</button>
+      <span style="color: red;" *ngIf="verificar">{{message}}</span>
     </form>
   </div>
   <div *ngIf="loading" style="    display: flex;

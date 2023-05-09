@@ -13,6 +13,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class LoginFormComponent implements OnInit {
   loginUsuario: FormGroup;
   loading: boolean = false;
+  verificar: boolean = false;
+  message: string =
+    '';
 
   constructor(
     private firebaseError: FirebaseErrorService,
@@ -33,17 +36,31 @@ export class LoginFormComponent implements OnInit {
     const email = this.loginUsuario.value.email;
     const password = this.loginUsuario.value.password;
 
-    this.loading = true;
-    this.afAuth
-      .signInWithEmailAndPassword(email, password)
-      .then((user) => {
-        this.router.navigate(['/list-products']);
-        console.log(user);
-      })
-      .catch((error) => {
-        this.firebaseError.errorFirebase(error.code);
-        this.loading = false;
-        // console.log(error)
-      });
+    if (
+      email === 'administrador.sistema@gmail.com' ||
+      email === 'dlaleja10@hotmail.com' ||
+      email === 'brahianriver99@gmail.com' ||
+      email === 'edwinkaycut@gmail.com'
+    ) {
+      this.loading = true;
+      this.afAuth
+        .signInWithEmailAndPassword(email, password)
+        .then((user) => {
+          this.router.navigate(['/list-products']);
+          console.log(user);
+        })
+        .catch((error) => {
+          this.firebaseError.errorFirebase(error.code);
+          this.loading = false;
+          // console.log(error)
+        });
+    } else {
+      this.verificar = true;
+      this.message =
+        'No estas Autorizado, comunicate con el administrador del sistema,';
+      setTimeout(() => {
+        this.message = '';
+      }, 2000);
+    }
   }
 }
