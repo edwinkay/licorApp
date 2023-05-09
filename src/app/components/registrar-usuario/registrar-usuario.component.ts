@@ -12,8 +12,7 @@ import { Router } from '@angular/router';
 })
 export class RegistrarUsuarioComponent implements OnInit {
   registrarUsuario: FormGroup;
-
-
+  loading: boolean = false;
 
   constructor(
     private firebaseError: FirebaseErrorService,
@@ -40,7 +39,7 @@ export class RegistrarUsuarioComponent implements OnInit {
       this.toastr.error('Las contraseñas no coinciden', 'Error');
       return;
     }
-
+    this.loading = true;
     this.afAuth
       .createUserWithEmailAndPassword(email, password)
       .then((user) => {
@@ -51,6 +50,7 @@ export class RegistrarUsuarioComponent implements OnInit {
         this.router.navigate(['/login']);
       })
       .catch((error) => {
+        this.loading = false;
         console.log(error);
         this.firebaseError.errorFirebase(error.code);
       });

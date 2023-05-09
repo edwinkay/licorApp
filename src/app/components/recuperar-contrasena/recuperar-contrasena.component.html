@@ -1,6 +1,7 @@
 <div>
-  <div style="margin-top: 8%">
+  <div *ngIf="!loading" style="margin-top: 8%">
     <form class="login-form" (ngSubmit)="recuperar()" [formGroup]="recuperarUsuario">
+      <h2 class="elH2">LicorMania</h2>
       <h2 class="form-title">RECUPERAR CUENTA</h2>
       <div class="form-group">
         <input
@@ -38,5 +39,15 @@
         <button [disabled]="recuperarUsuario.invalid" type="submit" class="submit-button">Aceptar</button>
       </div>
     </form>
+  </div>
+  <div *ngIf="loading" style="display: flex;
+    position: absolute;
+    left: 44%;
+    top: 42%;
+    flex-direction: column;
+    align-items: center;">
+    <h2 class="elH2">LicorMania</h2>
+    <span style="margin-bottom: 18px">Enviando peticion...</span>
+    <app-spinner ></app-spinner>
   </div>
 </div>

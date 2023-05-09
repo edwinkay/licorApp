@@ -12,6 +12,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class LoginFormComponent implements OnInit {
   loginUsuario: FormGroup;
+  loading: boolean = false;
 
   constructor(
     private firebaseError: FirebaseErrorService,
@@ -19,10 +20,12 @@ export class LoginFormComponent implements OnInit {
     private afAuth: AngularFireAuth,
     private toastr: ToastrService,
     private router: Router
-  ) {this.loginUsuario = this.fb.group({
+  ) {
+    this.loginUsuario = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
-    });}
+    });
+  }
 
   ngOnInit(): void {}
 
@@ -30,7 +33,7 @@ export class LoginFormComponent implements OnInit {
     const email = this.loginUsuario.value.email;
     const password = this.loginUsuario.value.password;
 
-
+    this.loading = true;
     this.afAuth
       .signInWithEmailAndPassword(email, password)
       .then((user) => {
@@ -39,6 +42,7 @@ export class LoginFormComponent implements OnInit {
       })
       .catch((error) => {
         this.firebaseError.errorFirebase(error.code);
+        this.loading = false;
         // console.log(error)
       });
   }

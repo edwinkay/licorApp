@@ -11,6 +11,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class RecuperarContrasenaComponent implements OnInit {
   recuperarUsuario: FormGroup;
+  loading: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -28,6 +29,7 @@ export class RecuperarContrasenaComponent implements OnInit {
   recuperar() {
     const email = this.recuperarUsuario.value.email;
 
+    this.loading = true;
     this.afAuth
       .sendPasswordResetEmail(email)
       .then(() => {
@@ -39,7 +41,7 @@ export class RecuperarContrasenaComponent implements OnInit {
       })
       .catch((error) => {
         // console.log(error)
-
+        this.loading = false;
         this.firebaseError(error.code);
       });
   }
