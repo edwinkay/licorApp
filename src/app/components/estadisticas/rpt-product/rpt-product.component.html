@@ -17,8 +17,9 @@
     <tr>
       <th scope="col">Nombre</th>
       <th scope="col">Descripcion</th>
-      <th scope="col">cantidad</th>
-      <th scope="col">cantidadTotal</th>
+      <th scope="col">Disponible</th>
+      <th scope="col">cantidad vendida</th>
+      <th scope="col">Disponible Total</th>
       <th scope="col">Total venta</th>
       <th scope="col">Ganancia</th>
 
@@ -30,8 +31,9 @@
     <tr *ngFor="let producto of products">
       <td>{{ producto.nombre }}</td>
       <td>{{ producto.descripcion }}</td>
-      <td>{{ producto.cantidad }}</td>
+      <td>{{ producto.disponible }}</td>
       <td>{{ producto.cantidadTotal}}</td>
+      <td>{{ producto.disponibleTotal}}</td>
       <td>{{ producto.totalVenta}}</td>
       <td>${{ producto.ganancia | currency : " " : "symbol" : "1.0" }}
       </td>
