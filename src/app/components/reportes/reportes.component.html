@@ -1,27 +1,57 @@
 <app-navbar></app-navbar>
-<div style="margin: 6px;">
-  <div>
-    <h3>REPORTES</h3>
+<div style="margin: 6px">
+  <div style="display: flex; justify-content: space-between">
+    <div style="display: flex; gap: 9px">
+      <div style="margin: 10px 0 6px 0">
+        <button routerLink="/reportes">REPORTE GENERAL</button>
+      </div>
+      <div style="margin: 10px 0 6px 0">
+        <button routerLink="/reporte-por-producto">REPORTE POR PRODUCTO</button>
+      </div>
+    </div>
+    <div>
+      <button class="btn btn-danger" (click)="abrirModalEliminar()">
+        Eliminar Reportes
+      </button>
+      <div class="modal" *ngIf="modalActivoEliminar">
+        <div class="contenido-modal">
+          <p>
+            Al hacer esto eliminaras los reportes, pero los productos seguiran
+            igual
+          </p>
+          <div style="display: flex; gap: 9px">
+            <button
+              style="background-color: blue"
+              class="btn btn-danger"
+              (click)="cerrarModalEliminar()"
+            >
+              Cerrar
+            </button>
+            <button class="btn btn-danger" (click)="eliminarReportes()">
+              Borrar Reportes
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
   <table class="table table-striped">
     <thead>
       <th class="col">Fecha</th>
       <th class="col">Nombre</th>
       <th class="col">Total</th>
-      <th class="col">borrar</th>
+      <!-- <th class="col">borrar</th> -->
     </thead>
     <tbody>
       <tr *ngFor="let reporte of reportes">
         <td>
-          {{reporte.fechaCreacion}}
+          {{ reporte.fechaCreacion }}
         </td>
         <td>
-          {{ countOccurrences(reporte.nombre).join(', ') }}
+          {{ countOccurrences(reporte.nombre).join(", ") }}
         </td>
-        <td>
-          ${{reporte.total | currency : " " : "symbol" : "1.0"}}
-        </td>
-        <td>
+        <td>${{ reporte.total | currency : " " : "symbol" : "1.0" }}</td>
+        <!-- <td>
           <div>
             <i
               style="cursor: pointer"
@@ -54,7 +84,7 @@
               </div>
             </div>
           </div>
-        </td>
+        </td> -->
       </tr>
     </tbody>
   </table>
@@ -65,8 +95,8 @@
     </thead>
     <tbody>
       <tr>
-        <td>${{gananciaObtenida | currency : " " : "symbol" : "1.0"}}</td>
-        <td>${{totalVentas | currency : " " : "symbol" : "1.0"}}</td>
+        <td>${{ gananciaObtenida | currency : " " : "symbol" : "1.0" }}</td>
+        <td>${{ totalVentas | currency : " " : "symbol" : "1.0" }}</td>
       </tr>
     </tbody>
   </table>

@@ -34,6 +34,7 @@ export class ReportesComponent implements OnInit {
           ...element.payload.doc.data(),
         });
       });
+      console.log(this.reportes);
       //obteniendo el total
       let total = this.reportes.reduce(
         (accumulator, currentValue) => accumulator + currentValue.total,
@@ -80,21 +81,14 @@ export class ReportesComponent implements OnInit {
     }
     return result;
   }
-  abrirModalEliminar(id: string) {
-    this.idObtenido = id;
+  abrirModalEliminar() {
     this.modalActivoEliminar = true;
   }
   cerrarModalEliminar() {
     this.modalActivoEliminar = false;
   }
-  eliminarProducto2() {
-    this._reportes.deleteProducts(this.idObtenido).then(() => {
-      this.modalActivoEliminar = false;
-      this.toastr.error(
-        'El producto fue eliminado con exito',
-        'Producto eliminado'
-      );
-      window.location.reload();
-    });
+  eliminarReportes() {
+    this._reportes.deleteAllReports()
+    this.modalActivoEliminar = false
   }
 }

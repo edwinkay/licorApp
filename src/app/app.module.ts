@@ -31,6 +31,7 @@ import { RegistrarUsuarioComponent } from './components/registrar-usuario/regist
 import { RecuperarContrasenaComponent } from './components/recuperar-contrasena/recuperar-contrasena.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { GananciaComponent } from './components/estadisticas/ganancia/ganancia.component';
+import { RptProductComponent } from './components/estadisticas/rpt-product/rpt-product.component';
 
 registerLocaleData(localeEs);
 @NgModule({
@@ -46,6 +47,7 @@ registerLocaleData(localeEs);
     RecuperarContrasenaComponent,
     SpinnerComponent,
     GananciaComponent,
+    RptProductComponent,
   ],
   imports: [
     BrowserModule,

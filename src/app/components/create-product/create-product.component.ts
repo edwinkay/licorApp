@@ -32,6 +32,7 @@ export class CreateProductComponent implements OnInit {
       precio: ['', Validators.required],
       imagenes: [''],
       disponible: ['', Validators.required],
+      cantidad: [''],
     });
     this.id = this.aRouter.snapshot.paramMap.get('id');
   }
@@ -70,7 +71,7 @@ export class CreateProductComponent implements OnInit {
       descripcion: this.createProduct.value.descripcion,
       precioCompra: this.createProduct.value.precioCompra,
       precio: this.createProduct.value.precio,
-      cantidad: 0,
+      cantidad: this.createProduct.value.cantidad,
       precioTotal: 0,
       imagenes: this.createProduct.value.imagenes,
       disponible: this.createProduct.value.disponible,
@@ -86,6 +87,7 @@ export class CreateProductComponent implements OnInit {
       descripcion: this.createProduct.value.descripcion,
       precioCompra: this.createProduct.value.precioCompra,
       precio: this.createProduct.value.precio,
+      cantidad: this.createProduct.value.cantidad,
       imagenes: this.createProduct.value.imagenes,
       disponible: this.createProduct.value.disponible,
     };
@@ -106,6 +108,7 @@ export class CreateProductComponent implements OnInit {
           descripcion: data.payload.data()['descripcion'],
           precioCompra: data.payload.data()['precioCompra'],
           precio: data.payload.data()['precio'],
+          cantidad: data.payload.data()['cantidad'],
           imagenes: data.payload.data()['imagenes'],
           disponible: data.payload.data()['disponible'],
         });

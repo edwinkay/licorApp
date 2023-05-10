@@ -1,0 +1,106 @@
+<app-navbar></app-navbar>
+<div style="margin: 6px 6px 12px 6px">
+  <div style="display: flex; justify-content: space-between">
+    <div style="display: flex;
+    gap: 9px;">
+    <div style="margin: 10px 0 6px 0;">
+    <button routerLink="/reportes">REPORTE GENERAL</button>
+  </div>
+  <div style="margin: 10px 0 6px 0;">
+    <button routerLink="/reporte-por-producto">REPORTE POR PRODUCTO</button>
+  </div>
+  </div>
+  </div>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Nombre</th>
+      <th scope="col">Descripcion</th>
+      <th scope="col">cantidad</th>
+      <th scope="col">Total venta</th>
+      <th scope="col">Ganancia</th>
+
+
+      <th scope="col">Acc</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let producto of products">
+      <td>{{ producto.nombre }}</td>
+      <td>{{ producto.descripcion }}</td>
+      <td>{{ producto.cantidad}}</td>
+      <td>{{ producto.totalVenta}}</td>
+      <td>${{ producto.ganancia | currency : " " : "symbol" : "1.0" }}
+      </td>
+      <td>
+        <i
+          style="cursor: pointer"
+          class="fas fa-edit fa-lg text-info"
+          [routerLink]="['/edit-product/', producto.id]"
+        ></i>
+      </td>
+      <!-- <td style="width: 85px">
+        <div style="display: flex; justify-content: space-evenly">
+          <div>
+            <i
+              style="cursor: pointer"
+              class="fas fa-edit fa-lg text-info"
+              [routerLink]="['/edit-product/', producto.id]"
+            ></i>
+          </div>
+          <div>
+            <i
+              style="cursor: pointer"
+              (click)="abrirModalEliminar(producto.id)"
+              class="fas fa-trash-alt fa-lg text-danger"
+            ></i>
+            <div class="modal" *ngIf="modalActivoEliminar">
+              <div class="contenido-modal">
+                <p>¿estas seguro que deseas eliminar este producto?</p>
+                <div
+                  style="display: flex; gap: 8px; justify-content: center"
+                  class="botones"
+                >
+                  <button
+                    class="btn btn-danger"
+                    style="background-color: blue"
+                    (click)="cerrarModalEliminar()"
+                  >
+                    Cerrar
+                  </button>
+                  <button
+                    style="background-color: red"
+                    type="button"
+                    class="btn btn-success"
+                    (click)="eliminarProducto2()"
+                  >
+                    Eliminar
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </td> -->
+    </tr>
+  </tbody>
+  <p *ngIf="products.length == 0">No hay productos seleccionados</p>
+</table>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Venta Total</th>
+      <th scope="col">Ganacia Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>${{ totalVenta | currency : " " : "symbol" : "1.0" }}</td>
+      <td>${{ ganancia | currency : " " : "symbol" : "1.0" }}</td>
+    </tr>
+  </tbody>
+</table>
+<div style="margin: 6px 6px 12px 6px">
+  <button class="btn btn-danger" routerLink="/reportes">Volver</button>
+</div>

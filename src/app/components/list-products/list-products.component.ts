@@ -26,8 +26,9 @@ export class ListProductsComponent implements OnInit {
 
   dataUser: any;
 
-  esPoker = false
-sel: any;
+  esPoker = false;
+  limitarClick = false;
+  counterClick = 0;
 
   constructor(
     private afAuth: AngularFireAuth,
@@ -61,14 +62,16 @@ sel: any;
 
   actualizarPrecioTotal() {
     this.productoSeleccionado.precioTotal =
-    this.productoSeleccionado.precio * this.productoSeleccionado.cantidad;
-    this.enabledButton = false
+      this.productoSeleccionado.precio * this.productoSeleccionado.cantidad;
+    this.enabledButton = false;
     // this.productoSeleccionado.disponible =
     //   this.productoSeleccionado.disponible +
     //   this.productoSeleccionado.cantidadAnterior -
     //   this.productoSeleccionado.cantidad;
-    if (this.productoSeleccionado.cantidad <= this.productoSeleccionado.disponible) {
-      this.habilitar = false
+    if (
+      this.productoSeleccionado.cantidad <= this.productoSeleccionado.disponible
+    ) {
+      this.habilitar = false;
     } else {
       this.habilitar = true;
     }
@@ -80,7 +83,7 @@ sel: any;
       this.habilitar = true;
     }
   }
-  onInputChange(){
+  onInputChange() {
     this.habilitar = false;
   }
   calcularPrecioTotal(cantidad: number) {
@@ -113,7 +116,7 @@ sel: any;
     this.productoSeleccionado.cantidad = 0;
     this.valorRestado = null;
     this.resultado = 0;
-    this.productoSeleccionado.precioTotal = 0
+    this.productoSeleccionado.precioTotal = 0;
   }
   incrementarCantidad() {
     this.habilitar = false;
@@ -142,17 +145,10 @@ sel: any;
     }
   }
   registrarProducto() {
-    let {
-      id,
-      nombre,
-      cantidad,
-      descripcion,
-      disponible,
-      imagenes,
-      precio,
-      precioCompra,
+    let {id, nombre,cantidad,descripcion,disponible,imagenes,precio,precioCompra,
       precioTotal,
     } = this.productoSeleccionado;
+
     const productoEncontrado = this.products.find(
       (producto) => producto.nombre === nombre
     );
@@ -160,16 +156,8 @@ sel: any;
       productoEncontrado.disponible -= cantidad;
       disponible = productoEncontrado.disponible;
     }
-    this.productosRegistrados.push({
-      id,
-      nombre,
-      cantidad,
-      descripcion,
-      disponible,
-      imagenes,
-      precio,
-      precioCompra,
-      precioTotal,
+
+    this.productosRegistrados.push({id,nombre,cantidad,descripcion,disponible,imagenes,precio,precioCompra,precioTotal,
     });
     this.modalActivo = false;
     this.enabledButton = false;
@@ -217,8 +205,9 @@ sel: any;
     }
   }
   agregarReporte() {
-    this._productService.updateProducts(this.productosRegistrados).then(() => {
-    });
+    this._productService
+      .updateProducts(this.productosRegistrados)
+      .then(() => {});
 
     const id = this.productosRegistrados.map((n) => n.id);
     const nombres = this.productosRegistrados.map((n) => n.nombre);
@@ -247,5 +236,14 @@ sel: any;
     });
     this.getProducts();
     this.productoSeleccionado = null;
+
+    this.counterClick = this.counterClick + 1
+    if (this.counterClick > 1) {
+      this.limitarClick = true;
+      setTimeout(() => {
+        this.limitarClick = false;
+      }, 2000);
+      this.counterClick = 0;
+    }
   }
 }

@@ -19,4 +19,17 @@ export class ReportesService {
   deleteProducts(id: string): Promise<any> {
     return this.firestore.collection('reportes').doc(id).delete();
   }
+  deleteAllReports(): void {
+    const reportesRef = this.firestore.collection('reportes');
+    const reportes$: Observable<any[]> = reportesRef.snapshotChanges();
+
+    reportes$.subscribe((reportes) => {
+      reportes.forEach((reportes) => {
+        this.firestore
+          .collection('reportes')
+          .doc(reportes.payload.doc.id)
+          .delete();
+      });
+    });
+  }
 }
