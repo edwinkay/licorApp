@@ -30,6 +30,8 @@ export class ListProductsComponent implements OnInit {
   limitarClick = false;
   counterClick = 0;
 
+  cantidadOriginal: number = 0;
+
   constructor(
     private afAuth: AngularFireAuth,
     private _productService: ProductsService,
@@ -90,6 +92,7 @@ export class ListProductsComponent implements OnInit {
     return this.productoSeleccionado.precio * cantidad;
   }
   abrirModal(producto: any) {
+    this.cantidadOriginal = producto.cantidad;
     this.habilitar = true;
     this.productoSeleccionado = producto;
     this.productoSeleccionado.cantidad = 0;
@@ -156,8 +159,9 @@ export class ListProductsComponent implements OnInit {
       productoEncontrado.disponible -= cantidad;
       disponible = productoEncontrado.disponible;
     }
-
-    this.productosRegistrados.push({id,nombre,cantidad,descripcion,disponible,imagenes,precio,precioCompra,precioTotal,
+    const cantidadTotal = cantidad + this.cantidadOriginal
+    console.log(cantidadTotal)
+    this.productosRegistrados.push({id,nombre,cantidad,descripcion,disponible,imagenes,precio,precioCompra,precioTotal,cantidadTotal,
     });
     this.modalActivo = false;
     this.enabledButton = false;

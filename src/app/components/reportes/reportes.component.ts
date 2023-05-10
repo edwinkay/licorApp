@@ -90,5 +90,6 @@ export class ReportesComponent implements OnInit {
   eliminarReportes() {
     this._reportes.deleteAllReports()
     this.modalActivoEliminar = false
+    window.location.reload();
   }
 }

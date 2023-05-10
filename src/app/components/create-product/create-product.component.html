@@ -75,12 +75,13 @@
         </div>
         <div class="container-element">
           <label
-            >Cantidad
+            >No modificar este campo
             <input
               type="number"
               class="form-control mt-2 text-center"
-              placeholder="Cantidad"
-              formControlName="cantidad"
+              placeholder="No modificar"
+              formControlName="cantidadTotal"
+              [(ngModel)]="cantidadTotal"
             />
           </label>
         </div>

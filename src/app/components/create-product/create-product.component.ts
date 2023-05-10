@@ -17,6 +17,7 @@ export class CreateProductComponent implements OnInit {
   titleChange: string = 'Agregar Producto';
   urlImagen: string =
     'https://media.istockphoto.com/id/1162198273/es/vector/dise%C3%B1o-de-ilustraci%C3%B3n-vectorial-plana-icono-de-signo-de-interrogaci%C3%B3n.jpg?s=1024x1024&w=is&k=20&c=pZBCbPrSZDpGfF0OzRN78BeLUIJbiWaRxeKVO2TG7sA=';
+  cantidadTotal: number = 0;
 
   constructor(
     private _productService: ProductsService,
@@ -32,7 +33,7 @@ export class CreateProductComponent implements OnInit {
       precio: ['', Validators.required],
       imagenes: [''],
       disponible: ['', Validators.required],
-      cantidad: [''],
+      cantidadTotal: [''],
     });
     this.id = this.aRouter.snapshot.paramMap.get('id');
   }
@@ -71,7 +72,8 @@ export class CreateProductComponent implements OnInit {
       descripcion: this.createProduct.value.descripcion,
       precioCompra: this.createProduct.value.precioCompra,
       precio: this.createProduct.value.precio,
-      cantidad: this.createProduct.value.cantidad,
+      cantidad: 0,
+      cantidadTotal: this.createProduct.value.cantidadTotal,
       precioTotal: 0,
       imagenes: this.createProduct.value.imagenes,
       disponible: this.createProduct.value.disponible,
@@ -87,7 +89,7 @@ export class CreateProductComponent implements OnInit {
       descripcion: this.createProduct.value.descripcion,
       precioCompra: this.createProduct.value.precioCompra,
       precio: this.createProduct.value.precio,
-      cantidad: this.createProduct.value.cantidad,
+      cantidadTotal: this.createProduct.value.cantidadTotal,
       imagenes: this.createProduct.value.imagenes,
       disponible: this.createProduct.value.disponible,
     };
@@ -108,7 +110,7 @@ export class CreateProductComponent implements OnInit {
           descripcion: data.payload.data()['descripcion'],
           precioCompra: data.payload.data()['precioCompra'],
           precio: data.payload.data()['precio'],
-          cantidad: data.payload.data()['cantidad'],
+          cantidadTotal: data.payload.data()['cantidadTotal'],
           imagenes: data.payload.data()['imagenes'],
           disponible: data.payload.data()['disponible'],
         });

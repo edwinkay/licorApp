@@ -29,9 +29,10 @@ export class RptProductComponent implements OnInit {
           id: element.payload.doc.id,
           ...element.payload.doc.data(),
         });
+        console.log(this.products);
         for (const item of this.products) {
           const precioC = item.precioCompra;
-          const cantidad = item.cantidad;
+          const cantidad = item.cantidadTotal;
           const precio = item.precio;
           const totalVenta = precio * cantidad;
           const micompra = precioC * cantidad;
