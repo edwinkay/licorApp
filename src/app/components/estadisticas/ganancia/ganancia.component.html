@@ -2,12 +2,7 @@
 <div style="margin: 6px 6px 12px 6px">
   <div style="display: flex; justify-content: space-between">
     <div>
-      <H3>LISTA DE PRODUCTOS</H3>
-    </div>
-    <div class="float">
-      <button class="btn btn-dark btn-lg" routerLink="/create-product">
-        Agregar nuevo producto
-      </button>
+      <H3>Balance General</H3>
     </div>
   </div>
 </div>
@@ -17,10 +12,13 @@
       <th scope="col">Nombre</th>
       <th scope="col">Descripcion</th>
       <th scope="col">Disponible</th>
-      <th scope="col">URL imagen</th>
       <th scope="col">Precio compra</th>
       <th scope="col">Precio venta</th>
-      <th scope="col">Acciones</th>
+      <th scope="col">total venta</th>
+      <th scope="col">Invertido</th>
+      <th scope="col">Ganancia</th>
+
+      <th scope="col">Acc</th>
     </tr>
   </thead>
   <tbody>
@@ -28,17 +26,19 @@
       <td>{{ producto.nombre }}</td>
       <td>{{ producto.descripcion }}</td>
       <td>{{ producto.disponible }}</td>
+      <td>${{ producto.precioCompra | currency : " " : "symbol" : "1.0" }}</td>
+      <td>${{ producto.precio | currency : " " : "symbol" : "1.0" }}</td>
+      <td>${{ producto.venta | currency : " " : "symbol" : "1.0" }}</td>
+      <td>${{ producto.invertido | currency : " " : "symbol" : "1.0" }}</td>
+      <td>${{ producto.ganancia | currency : " " : "symbol" : "1.0" }}</td>
       <td>
-        <img
-          width="50"
-          height="50"
-          [src]="producto.imagenes"
-          alt="url no valida"
-        />
+        <i
+          style="cursor: pointer"
+          class="fas fa-edit fa-lg text-info"
+          [routerLink]="['/edit-product/', producto.id]"
+        ></i>
       </td>
-      <td>${{ producto.precioCompra | currency : " " : "symbol" : "1.0"}}</td>
-      <td>${{ producto.precio | currency : " " : "symbol" : "1.0"}}</td>
-      <td style="width: 85px">
+      <!-- <td style="width: 85px">
         <div style="display: flex; justify-content: space-evenly">
           <div>
             <i
@@ -80,10 +80,24 @@
             </div>
           </div>
         </div>
-      </td>
+      </td> -->
     </tr>
   </tbody>
   <p *ngIf="products.length == 0">No hay productos seleccionados</p>
+</table>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Invertido Total</th>
+      <th scope="col">Ganacia Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>${{ invertido | currency : " " : "symbol" : "1.0" }}</td>
+      <td>${{ ganancia | currency : " " : "symbol" : "1.0" }}</td>
+    </tr>
+  </tbody>
 </table>
 <div style="margin: 6px 6px 12px 6px">
   <button class="btn btn-danger" routerLink="/list-products">Volver</button>

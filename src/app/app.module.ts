@@ -30,6 +30,7 @@ import { LoginFormComponent } from './components/login-form/login-form.component
 import { RegistrarUsuarioComponent } from './components/registrar-usuario/registrar-usuario.component';
 import { RecuperarContrasenaComponent } from './components/recuperar-contrasena/recuperar-contrasena.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
+import { GananciaComponent } from './components/estadisticas/ganancia/ganancia.component';
 
 registerLocaleData(localeEs);
 @NgModule({
@@ -44,6 +45,7 @@ registerLocaleData(localeEs);
     RegistrarUsuarioComponent,
     RecuperarContrasenaComponent,
     SpinnerComponent,
+    GananciaComponent,
   ],
   imports: [
     BrowserModule,

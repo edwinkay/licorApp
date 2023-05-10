@@ -8,6 +8,7 @@ import { LoginFormComponent } from './components/login-form/login-form.component
 import { RecuperarContrasenaComponent } from './components/recuperar-contrasena/recuperar-contrasena.component';
 import { RegistrarUsuarioComponent } from './components/registrar-usuario/registrar-usuario.component';
 import { AuthGuard } from './auth.guard';
+import { GananciaComponent } from './components/estadisticas/ganancia/ganancia.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -32,6 +33,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   { path: 'reportes', component: ReportesComponent, canActivate: [AuthGuard] },
+  { path: 'estadisticas', component: GananciaComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginFormComponent },
   { path: 'recuperar', component: RecuperarContrasenaComponent },
   { path: 'registrar', component: RegistrarUsuarioComponent },
