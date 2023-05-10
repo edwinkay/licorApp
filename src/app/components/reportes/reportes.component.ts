@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { ProductsService } from 'src/app/services/products.service';
 import { ReportesService } from 'src/app/services/reportes.service';
 
@@ -11,24 +12,20 @@ export class ReportesComponent implements OnInit {
   reportes: any[] = [];
   products: any[] = [];
   reports: any[] = [];
-  totalVentas: number = 0
+  totalVentas: number = 0;
   gananciaObtenida: number = 0;
+  modalActivoEliminar = false;
+  idObtenido: any;
 
-  constructor(private _products:ProductsService, private _reportes: ReportesService) {}
+  constructor(
+    private _products: ProductsService,
+    private _reportes: ReportesService,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit(): void {
     this.obtReportes();
   }
-  // obtProducts(){
-  //     this._products.getProducts().subscribe(products => {
-  //       products.forEach((element: any) => {
-  //         this.products.push({
-  //           id: element.payload.doc.id,
-  //           ...element.payload.doc.data(),
-  //         });
-  //       });
-  //     })
-  // }
   obtReportes() {
     this._reportes.obtReports().subscribe((data) => {
       data.forEach((element: any) => {
@@ -49,7 +46,7 @@ export class ReportesComponent implements OnInit {
       const totalCompra = lista
         .reduce((acc, curr) => acc.concat(curr), []) // Aplanar la matriz
         .reduce((acc: any, curr: any) => acc + curr, 0); // Sumar los elementos
-        this.gananciaObtenida = total - totalCompra; //
+      this.gananciaObtenida = total - totalCompra; //
 
       for (const item of this.reportes) {
         const timestamp = item.fechaCreacion;
@@ -82,5 +79,22 @@ export class ReportesComponent implements OnInit {
       result.push(`${item}${occ > 1 ? ' x' + occ : ''}`);
     }
     return result;
+  }
+  abrirModalEliminar(id: string) {
+    this.idObtenido = id;
+    this.modalActivoEliminar = true;
+  }
+  cerrarModalEliminar() {
+    this.modalActivoEliminar = false;
+  }
+  eliminarProducto2() {
+    this._reportes.deleteProducts(this.idObtenido).then(() => {
+      this.modalActivoEliminar = false;
+      this.toastr.error(
+        'El producto fue eliminado con exito',
+        'Producto eliminado'
+      );
+      window.location.reload();
+    });
   }
 }

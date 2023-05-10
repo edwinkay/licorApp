@@ -28,7 +28,6 @@ export class InfoProductComponent implements OnInit {
           id: element.payload.doc.id,
           ...element.payload.doc.data(),
         });
-        console.log(this.products);
       });
     });
   }
@@ -40,14 +39,12 @@ export class InfoProductComponent implements OnInit {
     this.modalActivoEliminar = false;
   }
   eliminarProducto2() {
-    console.log(this.idObtenido);
     this._productService.deleteProducts(this.idObtenido).then(() => {
       this.modalActivoEliminar = false;
       this.toastr.error(
         'El producto fue eliminado con exito',
         'Producto eliminado'
       );
-      console.log('deleted...');
     });
   }
 }

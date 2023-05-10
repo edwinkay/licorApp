@@ -16,4 +16,7 @@ export class ReportesService {
       .collection('reportes', (ref) => ref.orderBy('fechaCreacion', 'desc'))
       .snapshotChanges();
   }
+  deleteProducts(id: string): Promise<any> {
+    return this.firestore.collection('reportes').doc(id).delete();
+  }
 }

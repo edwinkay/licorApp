@@ -26,6 +26,9 @@ export class ListProductsComponent implements OnInit {
 
   dataUser: any;
 
+  esPoker = false
+sel: any;
+
   constructor(
     private afAuth: AngularFireAuth,
     private _productService: ProductsService,
@@ -38,7 +41,6 @@ export class ListProductsComponent implements OnInit {
     this.getProducts();
     this.afAuth.currentUser.then((data) => {
       if (data) {
-        console.log('Correo:', data.email);
         this.dataUser = data;
       } else {
         this.router.navigate(['/login']);
@@ -54,19 +56,33 @@ export class ListProductsComponent implements OnInit {
           ...element.payload.doc.data(),
         });
       });
-      console.log(this.products);
     });
   }
 
   actualizarPrecioTotal() {
     this.productoSeleccionado.precioTotal =
-      this.productoSeleccionado.precio * this.productoSeleccionado.cantidad;
-    this.productoSeleccionado.disponible =
-      this.productoSeleccionado.disponible +
-      this.productoSeleccionado.cantidadAnterior -
-      this.productoSeleccionado.cantidad;
+    this.productoSeleccionado.precio * this.productoSeleccionado.cantidad;
+    this.enabledButton = false
+    // this.productoSeleccionado.disponible =
+    //   this.productoSeleccionado.disponible +
+    //   this.productoSeleccionado.cantidadAnterior -
+    //   this.productoSeleccionado.cantidad;
+    if (this.productoSeleccionado.cantidad <= this.productoSeleccionado.disponible) {
+      this.habilitar = false
+    } else {
+      this.habilitar = true;
+    }
+    if (
+      this.productoSeleccionado.cantidad == 0 ||
+      this.productoSeleccionado.cantidad == null ||
+      this.productoSeleccionado.cantidad == undefined
+    ) {
+      this.habilitar = true;
+    }
   }
-
+  onInputChange(){
+    this.habilitar = false;
+  }
   calcularPrecioTotal(cantidad: number) {
     return this.productoSeleccionado.precio * cantidad;
   }
@@ -97,6 +113,7 @@ export class ListProductsComponent implements OnInit {
     this.productoSeleccionado.cantidad = 0;
     this.valorRestado = null;
     this.resultado = 0;
+    this.productoSeleccionado.precioTotal = 0
   }
   incrementarCantidad() {
     this.habilitar = false;
@@ -157,6 +174,7 @@ export class ListProductsComponent implements OnInit {
     this.modalActivo = false;
     this.enabledButton = false;
     this.productoSeleccionado.cantidad = 0;
+    this.productoSeleccionado.precioTotal = 0;
   }
   eliminarProducto(producto: any) {
     const index = this.productosRegistrados.indexOf(producto);
@@ -200,9 +218,7 @@ export class ListProductsComponent implements OnInit {
   }
   agregarReporte() {
     this._productService.updateProducts(this.productosRegistrados).then(() => {
-      console.log('productos actualizados');
     });
-    console.log(this.productosRegistrados);
 
     const id = this.productosRegistrados.map((n) => n.id);
     const nombres = this.productosRegistrados.map((n) => n.nombre);

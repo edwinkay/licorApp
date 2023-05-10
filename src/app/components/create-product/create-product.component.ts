@@ -41,10 +41,8 @@ export class CreateProductComponent implements OnInit {
   }
   verificar() {
     if (this.createProduct.valid) {
-      console.log('El formulario es válido');
       return true;
     } else {
-      console.log('El formulario no es válido');
       this.subbmited = true;
       setTimeout(() => {
         this.subbmited = false;
@@ -103,7 +101,6 @@ export class CreateProductComponent implements OnInit {
     if (this.id !== null) {
       this.titleChange = 'Editar Producto';
       this._productService.getProducto(this.id).subscribe((data) => {
-        console.log(data);
         this.createProduct.setValue({
           nombre: data.payload.data()['nombre'],
           descripcion: data.payload.data()['descripcion'],

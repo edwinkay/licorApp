@@ -28,7 +28,6 @@ export class NavbarComponent implements OnInit {
 
     this.afAuth.currentUser.then((data) => {
       if (data) {
-        console.log('Correo:', data.email);
         switch (data.email) {
           case 'dlaleja10@hotmail.com':
             this.dataUser = 'Alejandra';

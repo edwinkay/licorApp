@@ -23,6 +23,7 @@
         <p style="color: red">{{ producto.disponible ? "" : message }}</p>
       </div>
     </div>
+    <!-- modal producto -->
     <div class="modal" *ngIf="modalActivo">
       <div class="contenido-modal">
         <img
@@ -33,7 +34,12 @@
         />
         <h3>{{ productoSeleccionado.nombre }}</h3>
         <p>Descripción: {{ productoSeleccionado.descripcion }}</p>
-        <p>Precio: ${{ productoSeleccionado.precio | currency : " " : "symbol" : "1.0"}}</p>
+        <p style="text-align: center;">Precio: <input
+                style="text-align: center;"
+                type="number"
+                [(ngModel)]="productoSeleccionado.precio"
+                (input)="actualizarPrecioTotal()"
+              /></p>
         <p>
           Disponible:
           {{
@@ -51,9 +57,9 @@
           </button>
           <input
             id="cantidad"
-            type="text"
+            type="number"
             min="0"
-            [disabled]="true"
+            (ngModelChange)="onInputChange()"
             [(ngModel)]="productoSeleccionado.cantidad"
             (input)="actualizarPrecioTotal()"
           />

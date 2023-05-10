@@ -9,7 +9,7 @@ export class ProductsService {
   constructor(private firestore: AngularFirestore) {}
 
   getProducts(): Observable<any> {
-    return this.firestore.collection('productos').snapshotChanges();
+    return this.firestore.collection('productos', (ref) => ref.orderBy('nombre', 'asc')).snapshotChanges();
   }
   getProducto(id: string): Observable<any> {
     return this.firestore.collection('productos').doc(id).snapshotChanges();
