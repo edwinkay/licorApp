@@ -4,6 +4,7 @@ import localeEs from '@angular/common/locales/es';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 
+
 //firebase and enviroments
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireModule } from '@angular/fire/compat';
@@ -32,6 +33,7 @@ import { RecuperarContrasenaComponent } from './components/recuperar-contrasena/
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { GananciaComponent } from './components/estadisticas/ganancia/ganancia.component';
 import { RptProductComponent } from './components/estadisticas/rpt-product/rpt-product.component';
+import { RegistrosComponent } from './components/estadisticas/registros/registros.component';
 
 registerLocaleData(localeEs);
 @NgModule({
@@ -48,6 +50,7 @@ registerLocaleData(localeEs);
     SpinnerComponent,
     GananciaComponent,
     RptProductComponent,
+    RegistrosComponent,
   ],
   imports: [
     BrowserModule,

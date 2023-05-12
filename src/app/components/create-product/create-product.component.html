@@ -1,7 +1,7 @@
 <app-navbar></app-navbar>
 <div style="display: flex; flex-direction: column; align-items: center">
   <div>
-    <h2>{{ titleChange }}</h2>
+    <h2 (click)="change()">{{ titleChange }}</h2>
   </div>
   <div>
     <form [formGroup]="createProduct" (ngSubmit)="agregarEditarProducto()">
@@ -64,16 +64,46 @@
         </div>
         <div class="container-element">
           <label
+            >* Disponible total
+            <input
+              type="number"
+              class="form-control mt-2 text-center"
+              placeholder="Disponible Total"
+              formControlName="disponibleTotal"
+              id="valor1"
+              [(ngModel)]="resultadoTotal"
+              (input)="sumar()"
+            />
+          </label>
+        </div>
+        <div class="container-element">
+          <label
+            >Nuevo surtido
+            <input
+              type="number"
+              class="form-control mt-2 text-center"
+              placeholder="Nuevo surtido"
+              formControlName="nuevoSurtido"
+              id="valor1"
+              [(ngModel)]="nuevoSurtido"
+              (input)="sumar()"
+            />
+          </label>
+        </div>
+        <div class="container-element">
+          <label
             >* Disponible
             <input
               type="number"
               class="form-control mt-2 text-center"
               placeholder="Disponible"
               formControlName="disponible"
+              id="disponible"
+              [(ngModel)]="resultado"
             />
           </label>
         </div>
-        <div class="container-element">
+        <!-- <div class="container-element">
           <label
             >No modificar este campo
             <input
@@ -84,7 +114,7 @@
               [(ngModel)]="cantidadTotal"
             />
           </label>
-        </div>
+        </div> -->
         <div
           style="
             display: flex;

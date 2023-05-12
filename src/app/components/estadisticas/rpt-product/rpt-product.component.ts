@@ -32,14 +32,15 @@ export class RptProductComponent implements OnInit {
         console.log(this.products);
         for (const item of this.products) {
           const disponible = item.disponible
+          const disponibleTotal = item.disponibleTotal
           const precioC = item.precioCompra;
           const cantidad = item.cantidadTotal;
           const precio = item.precio;
           const totalVenta = precio * cantidad;
           const micompra = precioC * cantidad;
           const ganancia = totalVenta - micompra;
-          const dispoTotal = disponible + cantidad
-          item.disponibleTotal = dispoTotal
+          const cantidadVendida = disponibleTotal - disponible
+          item.cantidadTotal = cantidadVendida
           item.totalVenta = totalVenta;
           item.ganancia = ganancia;
         }

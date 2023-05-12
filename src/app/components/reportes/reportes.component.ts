@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { ProductsService } from 'src/app/services/products.service';
+import { RegistrosService } from 'src/app/services/registros.service';
 import { ReportesService } from 'src/app/services/reportes.service';
 
 @Component({
@@ -10,7 +11,6 @@ import { ReportesService } from 'src/app/services/reportes.service';
 })
 export class ReportesComponent implements OnInit {
   reportes: any[] = [];
-  products: any[] = [];
   reports: any[] = [];
   totalVentas: number = 0;
   gananciaObtenida: number = 0;
@@ -20,6 +20,7 @@ export class ReportesComponent implements OnInit {
   constructor(
     private _products: ProductsService,
     private _reportes: ReportesService,
+    private _registro: RegistrosService,
     private toastr: ToastrService
   ) {}
 
@@ -55,7 +56,7 @@ export class ReportesComponent implements OnInit {
           timestamp.seconds * 1000 + timestamp.nanoseconds / 1000000;
         const date = new Date(milliseconds);
         const formattedDate = new Intl.DateTimeFormat('en-US', {
-          timeZone: 'UTC',
+          timeZone: 'America/Bogota',
           dateStyle: 'medium',
           timeStyle: 'medium',
         }).format(date);
@@ -88,8 +89,26 @@ export class ReportesComponent implements OnInit {
     this.modalActivoEliminar = false;
   }
   eliminarReportes() {
-    this._reportes.deleteAllReports()
+    const nombres = this.reportes.map((r) => r.nombre)
+    const cantidad = this.reportes.map((r) => r.cantidad)
+    const gananciaObtenida = this.gananciaObtenida
+    const total = this.totalVentas
+    const nombre = nombres.flat()
+    const cantidades = cantidad.flat()
+    console.log(nombre)
+    const pay = {
+      nombres: nombre,
+      cantidades: cantidades,
+      gananciaObtenida: gananciaObtenida,
+      total: total
+    }
+    this._registro.addRegistros(pay).then(() => {
+      this.toastr.success('Registrado con exito', 'Reporte Registrados!!');
+      this._reportes.deleteAllReports()
+      window.location.reload()
+    })
     this.modalActivoEliminar = false
-    window.location.reload();
+
+
   }
 }

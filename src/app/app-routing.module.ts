@@ -10,6 +10,7 @@ import { RegistrarUsuarioComponent } from './components/registrar-usuario/regist
 import { AuthGuard } from './auth.guard';
 import { GananciaComponent } from './components/estadisticas/ganancia/ganancia.component';
 import { RptProductComponent } from './components/estadisticas/rpt-product/rpt-product.component';
+import { RegistrosComponent } from './components/estadisticas/registros/registros.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -36,6 +37,7 @@ const routes: Routes = [
   { path: 'reportes', component: ReportesComponent, canActivate: [AuthGuard] },
   { path: 'estadisticas', component: GananciaComponent, canActivate: [AuthGuard] },
   { path: 'reporte-por-producto', component: RptProductComponent, canActivate: [AuthGuard] },
+  { path: 'registros', component: RegistrosComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginFormComponent },
   { path: 'recuperar', component: RecuperarContrasenaComponent },
   { path: 'registrar', component: RegistrarUsuarioComponent },

@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ReportesService } from 'src/app/services/reportes.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
+import { RegistrosService } from 'src/app/services/registros.service';
 
 @Component({
   selector: 'app-list-products',
@@ -28,8 +29,6 @@ export class ListProductsComponent implements OnInit {
 
   esPoker = false;
   limitarClick = false;
-  counterClick = 0;
-
   cantidadOriginal: number = 0;
 
   constructor(
@@ -37,7 +36,8 @@ export class ListProductsComponent implements OnInit {
     private _productService: ProductsService,
     private _reportes: ReportesService,
     private toastr: ToastrService,
-    private router: Router
+    private router: Router,
+    private _registros: RegistrosService
   ) {}
 
   ngOnInit(): void {
@@ -66,10 +66,6 @@ export class ListProductsComponent implements OnInit {
     this.productoSeleccionado.precioTotal =
       this.productoSeleccionado.precio * this.productoSeleccionado.cantidad;
     this.enabledButton = false;
-    // this.productoSeleccionado.disponible =
-    //   this.productoSeleccionado.disponible +
-    //   this.productoSeleccionado.cantidadAnterior -
-    //   this.productoSeleccionado.cantidad;
     if (
       this.productoSeleccionado.cantidad <= this.productoSeleccionado.disponible
     ) {
@@ -167,6 +163,7 @@ export class ListProductsComponent implements OnInit {
     this.enabledButton = false;
     this.productoSeleccionado.cantidad = 0;
     this.productoSeleccionado.precioTotal = 0;
+    console.log(this.productosRegistrados)
   }
   eliminarProducto(producto: any) {
     const index = this.productosRegistrados.indexOf(producto);
@@ -209,6 +206,13 @@ export class ListProductsComponent implements OnInit {
     }
   }
   agregarReporte() {
+    this.limitarClick = true;
+    setTimeout(() => {
+      this.limitarClick = false;
+    }, 2000);
+
+
+    console.log(this.productosRegistrados)
     this._productService
       .updateProducts(this.productosRegistrados)
       .then(() => {});
@@ -233,21 +237,15 @@ export class ListProductsComponent implements OnInit {
       total: this.calcularTotal(),
       fechaCreacion: new Date(),
     };
+
     this._reportes.addReport(rpt).then(() => {
       this.toastr.success('Registrado con exito', 'Reporte Registrado!!');
       this.productosRegistrados = [];
       this.registrarActivo = false;
     });
+    // this._registros.addRegistros(rpt).then(() => {});
     this.getProducts();
     this.productoSeleccionado = null;
 
-    this.counterClick = this.counterClick + 1
-    if (this.counterClick > 1) {
-      this.limitarClick = true;
-      setTimeout(() => {
-        this.limitarClick = false;
-      }, 2000);
-      this.counterClick = 0;
-    }
   }
 }
