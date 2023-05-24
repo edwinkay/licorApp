@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductsService } from 'src/app/services/products.service';
 import { ToastrService } from 'ngx-toastr';
+import { Location } from '@angular/common';
 
 
 @Component({
@@ -28,6 +29,7 @@ export class CreateProductComponent implements OnInit {
   isDisabled = true;
 
   constructor(
+    private location: Location,
     private _productService: ProductsService,
     private toastr: ToastrService,
     private fb: FormBuilder,
@@ -53,8 +55,8 @@ export class CreateProductComponent implements OnInit {
   }
   change() {
     const disponibleTotalControl = this.createProduct.get('disponibleTotal');
-    const disponible= this.createProduct.get('disponible');
-    console.log(disponibleTotalControl)
+    const disponible = this.createProduct.get('disponible');
+    console.log(disponibleTotalControl);
     if (disponibleTotalControl?.disabled) {
       disponibleTotalControl.enable();
     } else {
@@ -154,5 +156,8 @@ export class CreateProductComponent implements OnInit {
         this.disponibleTotal = disponibleTotal;
       });
     }
+  }
+  goBack() {
+    this.location.back();
   }
 }

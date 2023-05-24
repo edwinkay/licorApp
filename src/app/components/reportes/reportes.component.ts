@@ -35,7 +35,6 @@ export class ReportesComponent implements OnInit {
           ...element.payload.doc.data(),
         });
       });
-      console.log(this.reportes);
       //obteniendo el total
       let total = this.reportes.reduce(
         (accumulator, currentValue) => accumulator + currentValue.total,
@@ -52,15 +51,19 @@ export class ReportesComponent implements OnInit {
 
       for (const item of this.reportes) {
         const timestamp = item.fechaCreacion;
-        const milliseconds =
-          timestamp.seconds * 1000 + timestamp.nanoseconds / 1000000;
-        const date = new Date(milliseconds);
-        const formattedDate = new Intl.DateTimeFormat('en-US', {
-          timeZone: 'America/Bogota',
-          dateStyle: 'medium',
-          timeStyle: 'medium',
-        }).format(date);
-        item.fechaCreacion = formattedDate;
+
+        if (timestamp && timestamp.seconds && timestamp.nanoseconds) {
+          const milliseconds =
+            timestamp.seconds * 1000 + timestamp.nanoseconds / 1000000;
+          const date = new Date(milliseconds);
+          const formattedDate = new Intl.DateTimeFormat('en-US', {
+            timeZone: 'America/Bogota',
+            dateStyle: 'medium',
+            timeStyle: 'medium',
+          }).format(date);
+
+          item.fechaCreacion = formattedDate;
+        }
       }
     });
   }
@@ -102,13 +105,15 @@ export class ReportesComponent implements OnInit {
       gananciaObtenida: gananciaObtenida,
       total: total
     }
+    console.log(pay)
     this._registro.addRegistros(pay).then(() => {
-      this.toastr.success('Registrado con exito', 'Reporte Registrados!!');
-      this._reportes.deleteAllReports()
-      window.location.reload()
     })
-    this.modalActivoEliminar = false
-
-
+    this.modalActivoEliminar = false;
+      this._reportes.deleteAllReports().then(() => {
+       this.reportes = [];
+       this.gananciaObtenida = 0
+       this.totalVentas = 0
+        this.toastr.info('Registrado con exito', 'Reporte Registrados!!');
+      })
   }
 }

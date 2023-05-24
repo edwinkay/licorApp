@@ -13,6 +13,8 @@ export class RegistrosComponent implements OnInit {
   cantidades: any = []
   ganancia: any
   total: any
+  gananciaTotal: any
+  sumaTotal: any
 
   constructor(
     private _registro: RegistrosService,
@@ -29,7 +31,6 @@ export class RegistrosComponent implements OnInit {
           id: element.payload.doc.id,
           ...element.payload.doc.data(),
         });
-        console.log(this.registros)
       });
       const nombres = this.registros.map(r=> r.nombres)
       this.nombre = nombres
@@ -39,6 +40,17 @@ export class RegistrosComponent implements OnInit {
       this.ganancia = ganancia
       const total = this.registros.map(r=> r.total)
       this.total = total
+
+      const gananciaTotal: number = ganancia.reduce(
+        (acumulador, valorActual) => acumulador + valorActual,
+        0
+      );
+      this.gananciaTotal = gananciaTotal
+      const sumaTotal: number = total.reduce(
+        (acumulador, valorActual) => acumulador + valorActual,
+        0
+      );
+      this.sumaTotal = sumaTotal
     })
   }
 }

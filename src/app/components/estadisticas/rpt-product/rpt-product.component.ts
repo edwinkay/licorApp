@@ -29,7 +29,6 @@ export class RptProductComponent implements OnInit {
           id: element.payload.doc.id,
           ...element.payload.doc.data(),
         });
-        console.log(this.products);
         for (const item of this.products) {
           const disponible = item.disponible
           const disponibleTotal = item.disponibleTotal

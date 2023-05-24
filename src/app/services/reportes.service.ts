@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { AngularFirestore, DocumentChangeAction } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -11,6 +11,9 @@ export class ReportesService {
   addReport(producto: any): Promise<any> {
     return this.firestore.collection('reportes').add(producto);
   }
+  getReportes(): Observable<DocumentChangeAction<unknown>[]> {
+    return this.firestore.collection('reportes', (ref) => ref.orderBy('fechaCreacion', 'desc')).snapshotChanges();
+  }
   obtReports(): Observable<any> {
     return this.firestore
       .collection('reportes', (ref) => ref.orderBy('fechaCreacion', 'desc'))
@@ -19,17 +22,19 @@ export class ReportesService {
   deleteProducts(id: string): Promise<any> {
     return this.firestore.collection('reportes').doc(id).delete();
   }
-  deleteAllReports(): void {
-    const reportesRef = this.firestore.collection('reportes');
-    const reportes$: Observable<any[]> = reportesRef.snapshotChanges();
-
-    reportes$.subscribe((reportes) => {
-      reportes.forEach((reportes) => {
-        this.firestore
-          .collection('reportes')
-          .doc(reportes.payload.doc.id)
-          .delete();
+  deleteAllReports(): any {
+    const batch = this.firestore.firestore.batch();
+    return this.firestore
+      .collection('reportes')
+      .ref.get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          batch.delete(doc.ref);
+        });
+        return batch.commit();
+      })
+      .catch((error) => {
+        console.error('Error al eliminar los reportes:', error);
       });
-    });
   }
 }
