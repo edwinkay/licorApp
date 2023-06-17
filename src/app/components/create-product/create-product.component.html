@@ -119,9 +119,12 @@
             display: flex;
             gap: 11px;
             margin: 14px 0 0 0;
-            justify-content: flex-end;
+            justify-content: space-between;
           "
         >
+        <div class="container-element">
+      <button  class="btn btn-danger" (click)="goBack()">Volver</button>
+    </div>
           <div class="container-element">
             <button class="btn btn-success" (click)="verificar()" type="submit">
               Aceptar
@@ -133,8 +136,6 @@
         </div>
       </div>
     </form>
-    <div style="position: absolute; bottom: -28px" class="container-element">
-      <button class="btn btn-danger" (click)="goBack()">Volver</button>
-    </div>
+
   </div>
 </div>

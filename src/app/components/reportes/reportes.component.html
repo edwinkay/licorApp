@@ -13,14 +13,13 @@
       </div>
     </div>
     <div>
-      <button class="btn btn-danger" (click)="abrirModalEliminar()">
-        Eliminar Reportes
+      <button class="btn btn-info" (click)="abrirModalEliminar()">
+        Enviar a Registros
       </button>
       <div class="modal" *ngIf="modalActivoEliminar">
         <div class="contenido-modal">
           <p>
-            Al hacer esto eliminaras los reportes, pero los productos seguiran
-            igual
+            Al hacer esto se almacena en "Registros" creando una tabla de ventas
           </p>
           <div style="display: flex; gap: 9px">
             <button
@@ -30,8 +29,8 @@
             >
               Cerrar
             </button>
-            <button class="btn btn-danger" (click)="eliminarReportes()">
-              Borrar Reportes
+            <button class="btn btn-info" (click)="eliminarReportes()">
+              Registrar
             </button>
           </div>
         </div>
@@ -42,6 +41,7 @@
     <thead>
       <th class="col">Fecha</th>
       <th class="col">Nombre</th>
+      <th class="col">ganancia</th>
       <th class="col">Total</th>
       <!-- <th class="col">borrar</th> -->
     </thead>
@@ -53,41 +53,8 @@
         <td>
           {{ countOccurrences(reporte.nombre).join(", ") }}
         </td>
+        <td>${{reporte.gananciaObtenida }}</td>
         <td>${{ reporte.total | currency : " " : "symbol" : "1.0" }}</td>
-        <!-- <td>
-          <div>
-            <i
-              style="cursor: pointer"
-              (click)="abrirModalEliminar(reporte.id)"
-              class="fas fa-trash-alt fa-lg text-danger"
-            ></i>
-            <div class="modal" *ngIf="modalActivoEliminar">
-              <div class="contenido-modal">
-                <p>¿estas seguro que deseas eliminar este producto?</p>
-                <div
-                  style="display: flex; gap: 8px; justify-content: center"
-                  class="botones"
-                >
-                  <button
-                    class="btn btn-danger"
-                    style="background-color: blue"
-                    (click)="cerrarModalEliminar()"
-                  >
-                    Cerrar
-                  </button>
-                  <button
-                    style="background-color: red"
-                    type="button"
-                    class="btn btn-success"
-                    (click)="eliminarProducto2()"
-                  >
-                    Eliminar
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </td> -->
       </tr>
     </tbody>
   </table>
@@ -98,7 +65,7 @@
     </thead>
     <tbody>
       <tr>
-        <td>${{ gananciaObtenida | currency : " " : "symbol" : "1.0" }}</td>
+        <td>${{ gananciaObtenida }}</td>
         <td>${{ totalVentas | currency : " " : "symbol" : "1.0" }}</td>
       </tr>
     </tbody>

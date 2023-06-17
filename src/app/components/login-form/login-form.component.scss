@@ -48,7 +48,7 @@ input[type="password"] {
 }
 
 .submit-button:hover {
-  background-color:rgb(212, 14, 14);
+  background-color: rgb(212, 14, 14);
   color: rgb(255, 254, 254);
 }
 
@@ -70,10 +70,26 @@ input[type="password"] {
 .register-link:hover {
   color: #0056b3;
 }
-.elH2{
+.elH2 {
   font-size: 36px;
   font-family: "Arial", sans-serif;
   color: #ff6f61;
   text-align: center;
   text-shadow: 2px 2px #000;
+}
+.container-login {
+  margin-top: 8%;
+  width: 30%;
+}
+.logo{
+  position: absolute;
+}
+@media screen and (max-width: 600px) {
+  .container-login {
+    margin-top: 19%;
+    width: 87%;
+  }
+  .logo{
+    display: none;
+  }
 }

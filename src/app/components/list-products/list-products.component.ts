@@ -155,15 +155,16 @@ export class ListProductsComponent implements OnInit {
       productoEncontrado.disponible -= cantidad;
       disponible = productoEncontrado.disponible;
     }
+    const precioTotalCompra = cantidad * precioCompra
+    const ganancia = precioTotal - precioTotalCompra;
     const cantidadTotal = cantidad + this.cantidadOriginal
-    console.log(cantidadTotal)
-    this.productosRegistrados.push({id,nombre,cantidad,descripcion,disponible,imagenes,precio,precioCompra,precioTotal,cantidadTotal,
+    this.productosRegistrados.push({id,nombre,cantidad,descripcion,disponible,imagenes,precio,precioCompra,precioTotalCompra,ganancia,precioTotal,cantidadTotal,
     });
+    console.log(this.productosRegistrados)
     this.modalActivo = false;
     this.enabledButton = false;
     this.productoSeleccionado.cantidad = 0;
     this.productoSeleccionado.precioTotal = 0;
-    console.log(this.productosRegistrados)
   }
   eliminarProducto(producto: any) {
     const index = this.productosRegistrados.indexOf(producto);
@@ -225,6 +226,8 @@ export class ListProductsComponent implements OnInit {
     const precios = this.productosRegistrados.map((n) => n.precio);
     const precioCompras = this.productosRegistrados.map((p) => p.precioCompra);
     const precioTotal = this.productosRegistrados.map((p) => p.precioTotal);
+    const ganancia = this.productosRegistrados.map((p) => p.ganancia);
+    const precioTcompra = this.productosRegistrados.map((p) => p.precioTotalCompra);
 
     const rpt: any = {
       nombre: nombres,
@@ -233,6 +236,8 @@ export class ListProductsComponent implements OnInit {
       disponible: disponibles,
       precio: precios,
       precioCompra: precioCompras,
+      precioTotalCompra: precioTcompra,
+      ganancia: ganancia,
       precioTotal: precioTotal,
       total: this.calcularTotal(),
       fechaCreacion: new Date(),

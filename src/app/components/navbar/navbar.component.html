@@ -1,4 +1,4 @@
-<mat-toolbar style="display: flex; justify-content: space-between" color="warn">
+<mat-toolbar class="nav" color="warn">
   <div style="display: flex">
     <div style="display: flex; align-items: center">
       <button
@@ -12,23 +12,23 @@
         >
       </button>
     </div>
-    <div>
+    <div class="title">
       <span
         class="logout elH2"
         routerLink="/list-products"
         style="padding-left: 8px; cursor: pointer"
         >LicorMania</span
       >
-      <span style="margin-left: 10%">{{
-        today | date : "d MMM y, EEEE h:mm:ss a"
-      }}</span>
+      <span class="spa">{{ today | date : "d MMM y, EEEE h:mm:ss a" }}</span>
     </div>
   </div>
-  <div>
-    <h3 class="welcome">Hola!! {{ dataUser }}</h3>
-  </div>
-  <div>
-    <span class="logout" (click)="logout()">Cerrar Sesion</span>
+  <div class="tit">
+    <div>
+      <h3 class="welcome">Hola!! {{ dataUser }}</h3>
+    </div>
+    <div>
+      <span class="logout" (click)="logout()">Cerrar Sesion</span>
+    </div>
   </div>
 </mat-toolbar>
 

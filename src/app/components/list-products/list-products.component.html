@@ -1,7 +1,14 @@
 <app-navbar></app-navbar>
 <div class="table-responsive">
-  <div style="display: flex; flex-wrap: wrap; justify-content: space-evenly;">
-    <div *ngFor="let producto of products">
+  <div
+    style="
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      row-gap: 6px;
+    "
+  >
+    <div class="product" *ngFor="let producto of products">
       <div
         style="border: 1px solid #8080802e; border-radius: 6px; margin: 2px"
         class="producto"
@@ -34,12 +41,15 @@
         />
         <h3>{{ productoSeleccionado.nombre }}</h3>
         <p>Descripción: {{ productoSeleccionado.descripcion }}</p>
-        <p style="text-align: center;">Precio: <input
-                style="text-align: center;"
-                type="number"
-                [(ngModel)]="productoSeleccionado.precio"
-                (input)="actualizarPrecioTotal()"
-              /></p>
+        <p style="text-align: center">
+          Precio:
+          <input
+            style="text-align: center"
+            type="number"
+            [(ngModel)]="productoSeleccionado.precio"
+            (input)="actualizarPrecioTotal()"
+          />
+        </p>
         <p>
           Disponible:
           {{
@@ -72,7 +82,11 @@
           </button>
         </div>
 
-        <p>Precio Total: ${{ productoSeleccionado.precioTotal | currency : " " : "symbol" : "1.0"}}</p>
+        <p>
+          Precio Total: ${{
+            productoSeleccionado.precioTotal | currency : " " : "symbol" : "1.0"
+          }}
+        </p>
         <div class="botones">
           <button style="background-color: red" (click)="cerrarModal()">
             Cerrar
@@ -103,7 +117,9 @@
       <tr *ngFor="let producto of productosRegistrados">
         <td>{{ producto.nombre }}</td>
         <td>{{ producto.cantidad }}</td>
-        <td>$ {{ producto.precioTotal | currency : " " : "symbol" : "1.0" }}</td>
+        <td>
+          $ {{ producto.precioTotal | currency : " " : "symbol" : "1.0" }}
+        </td>
         <td>
           <button class="btn btn-danger" (click)="eliminarProducto(producto)">
             Eliminar

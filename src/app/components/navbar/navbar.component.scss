@@ -64,16 +64,49 @@
   flex-direction: column;
   align-items: center;
 }
-.logout{
+.logout {
   cursor: pointer;
 }
-.logout:hover{
-  color: rgb(215, 210, 210)
+.logout:hover {
+  color: rgb(215, 210, 210);
 }
-.elH2{
+.elH2 {
   font-size: 32px;
-    font-family: "Arial", sans-serif;
-    color: #505cfb;
+  font-family: "Arial", sans-serif;
+  color: #505cfb;
+  text-align: center;
+  text-shadow: 2px 2px #f3f0f0;
+}
+.nav {
+  display: flex;
+  justify-content: space-between;
+}
+.spa {
+  margin-left: 16px;
+}
+.tit {
+  display: flex;
+  gap: 92px;
+}
+@media screen and (max-width: 600px) {
+  .nav {
+    height: 250px;
+    white-space: initial;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+  }
+  .title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .spa {
+    margin-left: 10%;
     text-align: center;
-    text-shadow: 2px 2px #f3f0f0;
+  }
+  .tit {
+    position: relative;
+    left: 25px;
+  }
 }

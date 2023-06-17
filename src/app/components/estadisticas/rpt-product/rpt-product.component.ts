@@ -9,8 +9,8 @@ import { ProductsService } from 'src/app/services/products.service';
 })
 export class RptProductComponent implements OnInit {
   products: any[] = [];
-  totalVenta: any;
-  ganancia: any;
+  totalVenta: number = 0;
+  ganancia: number = 0;
 
   constructor(
     private _productService: ProductsService,
@@ -30,30 +30,31 @@ export class RptProductComponent implements OnInit {
           ...element.payload.doc.data(),
         });
         for (const item of this.products) {
-          const disponible = item.disponible
-          const disponibleTotal = item.disponibleTotal
+          const disponible = item.disponible;
+          const disponibleTotal = item.disponibleTotal;
           const precioC = item.precioCompra;
           const cantidad = item.cantidadTotal;
           const precio = item.precio;
           const totalVenta = precio * cantidad;
           const micompra = precioC * cantidad;
           const ganancia = totalVenta - micompra;
-          const cantidadVendida = disponibleTotal - disponible
-          item.cantidadTotal = cantidadVendida
+          const cantidadVendida = disponibleTotal - disponible;
+          item.cantidadTotal = cantidadVendida;
           item.totalVenta = totalVenta;
           item.ganancia = ganancia;
         }
         const totalVenta = this.products.reduce(
           (acumulador, producto) => acumulador + producto.totalVenta,
           0
-        );
+          )
         this.totalVenta = totalVenta;
 
         const ganancia = this.products.reduce(
           (acumulador, producto) => acumulador + producto.ganancia,
           0
         );
-        this.ganancia = ganancia
+        this.ganancia = ganancia;
+        console.log(totalVenta,ganancia)
       });
     });
   }

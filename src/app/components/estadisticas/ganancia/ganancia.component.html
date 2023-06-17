@@ -1,44 +1,47 @@
 <app-navbar></app-navbar>
-<div style="margin: 6px 6px 12px 6px">
-  <div style="display: flex; justify-content: space-between">
-    <div>
-      <H3>Balance General</H3>
+<div class="ganacia-container">
+  <div style="margin: 6px 6px 12px 6px">
+    <div style="display: flex; justify-content: space-between">
+      <div>
+        <H3>Balance General</H3>
+      </div>
     </div>
   </div>
-</div>
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th scope="col">Nombre</th>
-      <th scope="col">Descripcion</th>
-      <th scope="col">Disponible</th>
-      <th scope="col">Precio compra</th>
-      <th scope="col">Precio venta</th>
-      <th scope="col">total venta</th>
-      <th scope="col">Invertido</th>
-      <th scope="col">Ganancia</th>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Nombre</th>
+        <th scope="col">Descripcion</th>
+        <th scope="col">Disponible</th>
+        <th scope="col">Precio compra</th>
+        <th scope="col">Precio venta</th>
+        <th scope="col">total venta</th>
+        <th scope="col">Invertido</th>
+        <th scope="col">Ganancia</th>
 
-      <th scope="col">Acc</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let producto of products">
-      <td>{{ producto.nombre }}</td>
-      <td>{{ producto.descripcion }}</td>
-      <td>{{ producto.disponible }}</td>
-      <td>${{ producto.precioCompra | currency : " " : "symbol" : "1.0" }}</td>
-      <td>${{ producto.precio | currency : " " : "symbol" : "1.0" }}</td>
-      <td>${{ producto.venta | currency : " " : "symbol" : "1.0" }}</td>
-      <td>${{ producto.invertido | currency : " " : "symbol" : "1.0" }}</td>
-      <td>${{ producto.ganancia | currency : " " : "symbol" : "1.0" }}</td>
-      <td>
-        <i
-          style="cursor: pointer"
-          class="fas fa-edit fa-lg text-info"
-          [routerLink]="['/edit-product/', producto.id]"
-        ></i>
-      </td>
-      <!-- <td style="width: 85px">
+        <th scope="col">Acc</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let producto of products">
+        <td>{{ producto.nombre }}</td>
+        <td>{{ producto.descripcion }}</td>
+        <td>{{ producto.disponible }}</td>
+        <td>
+          ${{ producto.precioCompra | currency : " " : "symbol" : "1.0" }}
+        </td>
+        <td>${{ producto.precio | currency : " " : "symbol" : "1.0" }}</td>
+        <td>${{ producto.venta | currency : " " : "symbol" : "1.0" }}</td>
+        <td>${{ producto.invertido | currency : " " : "symbol" : "1.0" }}</td>
+        <td>${{ producto.ganancia | currency : " " : "symbol" : "1.0" }}</td>
+        <td>
+          <i
+            style="cursor: pointer"
+            class="fas fa-edit fa-lg text-info"
+            [routerLink]="['/edit-product/', producto.id]"
+          ></i>
+        </td>
+        <!-- <td style="width: 85px">
         <div style="display: flex; justify-content: space-evenly">
           <div>
             <i
@@ -81,24 +84,25 @@
           </div>
         </div>
       </td> -->
-    </tr>
-  </tbody>
-  <p *ngIf="products.length == 0">No hay productos seleccionados</p>
-</table>
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th scope="col">Invertido Total</th>
-      <th scope="col">Ganacia Total</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>${{ invertido | currency : " " : "symbol" : "1.0" }}</td>
-      <td>${{ ganancia | currency : " " : "symbol" : "1.0" }}</td>
-    </tr>
-  </tbody>
-</table>
-<div style="margin: 6px 6px 12px 6px">
-  <button class="btn btn-danger" routerLink="/list-products">Volver</button>
+      </tr>
+    </tbody>
+    <p *ngIf="products.length == 0">No hay productos seleccionados</p>
+  </table>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Invertido Total</th>
+        <th scope="col">Ganacia Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>${{ invertido | currency : " " : "symbol" : "1.0" }}</td>
+        <td>${{ ganancia | currency : " " : "symbol" : "1.0" }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div style="margin: 6px 6px 12px 6px">
+    <button class="btn btn-danger" routerLink="/list-products">Volver</button>
+  </div>
 </div>

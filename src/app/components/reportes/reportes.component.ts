@@ -41,13 +41,26 @@ export class ReportesComponent implements OnInit {
         0
       );
       this.totalVentas = total;
-      //obt compratotal
-      const lista = this.reportes.map((item) => item.precioCompra);
 
-      const totalCompra = lista
-        .reduce((acc, curr) => acc.concat(curr), []) // Aplanar la matriz
-        .reduce((acc: any, curr: any) => acc + curr, 0); // Sumar los elementos
-      this.gananciaObtenida = total - totalCompra; //
+      for(const item of this.reportes) {
+        const ganancia = item.ganancia
+        item.gananciaObtenida = parseInt(ganancia);
+      }
+      //obteniendo la ganancia
+      let ganancias = this.reportes.reduce(
+        (accumulator, currentValue) => accumulator + currentValue.gananciaObtenida ,
+        0
+      );
+      this.gananciaObtenida = ganancias;
+      console.log('mostrar', ganancias)
+
+      //obt compratotal
+      // const lista = this.reportes.map((item) => item.precioTotalCompra);
+
+      // const totalCompra = lista
+      //   .reduce((acc, curr) => acc.concat(curr), []) // Aplanar la matriz
+      //   .reduce((acc: any, curr: any) => acc + curr, 0); // Sumar los elementos
+      // this.gananciaObtenida = total - totalCompra; //
 
       for (const item of this.reportes) {
         const timestamp = item.fechaCreacion;

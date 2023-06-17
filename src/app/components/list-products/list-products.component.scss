@@ -1,12 +1,15 @@
-
 .producto {
   display: flex;
   flex-direction: column;
   align-items: center;
   cursor: pointer;
   margin: 10px;
+  height: 285px;
 }
-
+.product {
+  width: 140px;
+  height: 285px;
+}
 .producto img {
   margin-bottom: 10px;
 }
@@ -115,8 +118,21 @@
   justify-content: space-between;
   width: 100px;
 }
-.botones{
-    display: flex;
-    gap: 12px;
+.botones {
+  display: flex;
+  gap: 12px;
 }
-
+@media screen and (max-width: 600px) {
+  .producto {
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 6px;
+    align-items: center;
+    justify-content: space-around;
+    height: 300px;
+  }
+  .product {
+  width: 140px;
+  height: 300px;
+}
+}

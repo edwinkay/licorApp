@@ -1,9 +1,12 @@
+<img class="logo" src="../../../assets/image/big.png" alt="">
 <div style="display: flex;
     justify-content: center;">
-  <div *ngIf="!loading" style="margin-top: 8%; width: 30%;">
+  <div class="container-login" *ngIf="!loading">
     <form class="login-form" (ngSubmit)="login()" [formGroup]="loginUsuario"
       class="form-contenedor">
-      <h2 class="elH2">LicorMania</h2>
+      <div>
+        <h2 class="elH2">LicorMania</h2>
+      </div>
       <h2 class="form-title">Iniciar sesión</h2>
       <div class="form-group">
         <label for="email">Correo electrónico</label>
