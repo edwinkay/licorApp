@@ -3,6 +3,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { ComunicationService } from 'src/app/services/comunication.service';
 
 @Component({
   selector: 'app-navbar',
@@ -14,11 +15,14 @@ export class NavbarComponent implements OnInit {
   modal = false;
   today = new Date();
   dataUser: any;
+  mostrarVentana = false;
+  valor: boolean = false;
 
   constructor(
     private afAuth: AngularFireAuth,
     private router: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private _comunication: ComunicationService
   ) {}
 
   ngOnInit(): void {
@@ -60,5 +64,9 @@ export class NavbarComponent implements OnInit {
   }
   cerrar() {
     this.modal = false;
+  }
+  enviarValor() {
+    this.valor = !this.valor
+    this._comunication.enviarValor(this.valor)
   }
 }

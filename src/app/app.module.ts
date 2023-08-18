@@ -14,6 +14,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ListProductsComponent } from './components/list-products/list-products.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 
 // modulos
@@ -56,6 +57,7 @@ registerLocaleData(localeEs);
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    NoopAnimationsModule,
     FormsModule,
     MatToolbarModule,
     MatIconModule,

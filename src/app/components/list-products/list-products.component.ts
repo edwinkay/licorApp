@@ -5,11 +5,28 @@ import { ReportesService } from 'src/app/services/reportes.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import { RegistrosService } from 'src/app/services/registros.service';
+import { ComunicationService } from 'src/app/services/comunication.service';
+import {
+  trigger,
+  state,
+  style,
+  animate,
+  transition,
+} from '@angular/animations';
+import { DailyService } from 'src/app/services/daily.service';
 
 @Component({
   selector: 'app-list-products',
   templateUrl: './list-products.component.html',
   styleUrls: ['./list-products.component.scss'],
+  animations: [
+    trigger('slideInFromRight', [
+      state('void', style({ transform: 'translateX(100%)' })),
+      state('*', style({ transform: 'translateX(0)' })),
+      transition(':enter', animate('300ms ease-in-out')),
+      transition(':leave', animate('300ms ease-in-out')),
+    ]),
+  ],
 })
 export class ListProductsComponent implements OnInit {
   productoSeleccionado: any = null;
@@ -20,13 +37,19 @@ export class ListProductsComponent implements OnInit {
   maxCantidad: any;
   habilitar = true;
   products: any[] = [];
+  daily: any[] = [];
   registrarActivo = false;
+  pagarModal = false;
+  total: number = 0
+  idp = ''
+  ganancia: number = 0
 
   valorRestado: any;
   resultado: number = 0;
 
   dataUser: any;
 
+  valor = false;
   esPoker = false;
   limitarClick = false;
   cantidadOriginal: number = 0;
@@ -35,13 +58,20 @@ export class ListProductsComponent implements OnInit {
     private afAuth: AngularFireAuth,
     private _productService: ProductsService,
     private _reportes: ReportesService,
+    private _daily: DailyService,
     private toastr: ToastrService,
     private router: Router,
-    private _registros: RegistrosService
+    private _registros: RegistrosService,
+    private _comunication: ComunicationService
   ) {}
 
   ngOnInit(): void {
+    this._comunication.valorEnviado.subscribe((valor: boolean) => {
+      this.valor = valor;
+    });
+    this.getDaily();
     this.getProducts();
+    // this.cargarProductosRegistrados();
     this.afAuth.currentUser.then((data) => {
       if (data) {
         this.dataUser = data;
@@ -50,6 +80,9 @@ export class ListProductsComponent implements OnInit {
       }
     });
   }
+  // mostrarInventario(){
+  //   this.mostrar = !this.mostrar
+  // }
   getProducts() {
     this._productService.getProducts().subscribe((data) => {
       this.products = [];
@@ -60,6 +93,28 @@ export class ListProductsComponent implements OnInit {
         });
       });
     });
+  }
+  getDaily() {
+    this._daily.obtDaily().subscribe((data) => {
+      this.daily = []
+      data.forEach((element: any) => {
+        this.daily.push({
+          id: element.payload.doc.id,
+          ...element.payload.doc.data(),
+        });
+        console.log(this.daily)
+        let totalp = 0
+        this.daily.forEach(p => {
+          totalp += p.precioTotal
+        })
+        this.total = totalp
+        let gana = 0
+          this.daily.forEach(g => {
+            gana += g.ganancia
+          })
+          this.ganancia = gana
+      })
+    })
   }
 
   actualizarPrecioTotal() {
@@ -109,6 +164,7 @@ export class ListProductsComponent implements OnInit {
     }
   }
   cerrarModal() {
+    this.pagarModal = false
     this.registrarActivo = false;
     this.enabledButton = false;
     this.modalActivo = false;
@@ -143,8 +199,29 @@ export class ListProductsComponent implements OnInit {
       this.habilitar = true;
     }
   }
+  // guardarEnLocalStorage() {
+  //   localStorage.setItem(
+  //     'productosRegistrados',
+  //     JSON.stringify(this.productosRegistrados)
+  //   );
+  // }
+  // cargarProductosRegistrados() {
+  // const productosRegistrados = localStorage.getItem('productosRegistrados');
+  // if (productosRegistrados) {
+  //   this.productosRegistrados = JSON.parse(productosRegistrados);
+  //  }
+  // }
   registrarProducto() {
-    let {id, nombre,cantidad,descripcion,disponible,imagenes,precio,precioCompra,
+    // this.guardarEnLocalStorage();
+    let {
+      id,
+      nombre,
+      cantidad,
+      descripcion,
+      disponible,
+      imagenes,
+      precio,
+      precioCompra,
       precioTotal,
     } = this.productoSeleccionado;
 
@@ -155,40 +232,65 @@ export class ListProductsComponent implements OnInit {
       productoEncontrado.disponible -= cantidad;
       disponible = productoEncontrado.disponible;
     }
-    const precioTotalCompra = cantidad * precioCompra
+    const pago = false;
+    const nota = '';
+    const precioTotalCompra = cantidad * precioCompra;
     const ganancia = precioTotal - precioTotalCompra;
-    const cantidadTotal = cantidad + this.cantidadOriginal
-    this.productosRegistrados.push({id,nombre,cantidad,descripcion,disponible,imagenes,precio,precioCompra,precioTotalCompra,ganancia,precioTotal,cantidadTotal,
+    const cantidadTotal = cantidad + this.cantidadOriginal;
+    this.productosRegistrados.push({
+      nombre,
+      cantidad,
+      descripcion,
+      disponible,
+      imagenes,
+      precio,
+      precioCompra,
+      precioTotalCompra,
+      ganancia,
+      precioTotal,
+      cantidadTotal,
+      pago,
+      // nota,
     });
-    console.log(this.productosRegistrados)
+    // const obj = this.productosRegistrados[0];
+    const gan = this.productoSeleccionado.precio - this.productoSeleccionado.precioCompra
+    const prod = {
+      nombre: this.productoSeleccionado.nombre,
+      cantidad: this.productoSeleccionado.cantidad,
+      descripcion: this.productoSeleccionado.descripcion,
+      disponible: this.productoSeleccionado.disponible,
+      precio: this.productoSeleccionado.precio,
+      precioTotal: this.productoSeleccionado.precioTotal,
+      precioCompra: this.productoSeleccionado.precioCompra,
+      pago: false,
+      ganancia: gan * cantidad
+        }
+    console.log('proggg', this.productoSeleccionado)
+    this._daily.agregarDaily(prod).then(() => {
+      console.log('producto agregado');
+    });
     this.modalActivo = false;
     this.enabledButton = false;
     this.productoSeleccionado.cantidad = 0;
     this.productoSeleccionado.precioTotal = 0;
   }
-  eliminarProducto(producto: any) {
-    const index = this.productosRegistrados.indexOf(producto);
-    if (index > -1) {
-      this.productosRegistrados.splice(index, 1);
-      this.toastr.error(
-        'El producto fue eliminado con exito',
-        'Producto eliminado'
-      );
-    }
-    const productoEncontrado = this.products.find(
-      (producto) => producto.nombre === this.productoSeleccionado.nombre
-    );
-    if (productoEncontrado) {
-      productoEncontrado.disponible += producto.cantidad;
-    }
+  eliminarProducto(id: string) {
+    this._daily
+      .deleteDaily(id)
+      .then(() => {
+        console.log('Eliminado exitosamente');
+      })
+      .catch((error) => {
+        console.error('Error al eliminar:', error);
+      });
   }
-  borrarTabla() {
-    this.getProducts();
-    this.productosRegistrados = [];
-    this.toastr.error('Todos los productos fueron eliminados', 'Eliminados');
-    this.valorRestado = null;
-    this.resultado = 0;
-  }
+  // borrarTabla() {
+  //   this.getProducts();
+  //   this.productosRegistrados = [];
+  //   this.toastr.error('Todos los productos fueron eliminados', 'Eliminados');
+  //   this.valorRestado = null;
+  //   this.resultado = 0;
+  // }
   calcularTotal() {
     let total = 0;
     this.productosRegistrados.forEach((producto) => {
@@ -200,20 +302,24 @@ export class ListProductsComponent implements OnInit {
     this.registrarActivo = true;
   }
   restarValor() {
-    if (this.valorRestado >= this.calcularTotal()) {
-      this.resultado = Math.abs(this.calcularTotal() - this.valorRestado);
-    } else {
-      this.resultado = 0;
-    }
+    // if (this.valorRestado >= this.calcularTotal()) {
+    //   this.resultado = Math.abs(this.calcularTotal() - this.valorRestado);
+    // } else {
+    //   this.resultado = 0;
+    // }
+    // this.resultado = this.productoSeleccionado.precioTotal - this.valorRestado;
+    // if (this.resultado < 0) {
+    //   this.resultado = 0;
+    // }
   }
   agregarReporte() {
+
     this.limitarClick = true;
     setTimeout(() => {
       this.limitarClick = false;
     }, 2000);
 
-
-    console.log(this.productosRegistrados)
+    console.log(this.productosRegistrados);
     this._productService
       .updateProducts(this.productosRegistrados)
       .then(() => {});
@@ -227,7 +333,9 @@ export class ListProductsComponent implements OnInit {
     const precioCompras = this.productosRegistrados.map((p) => p.precioCompra);
     const precioTotal = this.productosRegistrados.map((p) => p.precioTotal);
     const ganancia = this.productosRegistrados.map((p) => p.ganancia);
-    const precioTcompra = this.productosRegistrados.map((p) => p.precioTotalCompra);
+    const precioTcompra = this.productosRegistrados.map(
+      (p) => p.precioTotalCompra
+    );
 
     const rpt: any = {
       nombre: nombres,
@@ -251,6 +359,19 @@ export class ListProductsComponent implements OnInit {
     // this._registros.addRegistros(rpt).then(() => {});
     this.getProducts();
     this.productoSeleccionado = null;
-
+    this._daily.deleteAllDaily().then(() => {});
+  }
+  abrirPago(id: string) {
+    this.idp = id
+    this.pagarModal = true
+  }
+  actualizar() {
+    const pagar = {
+      pago: true
+    }
+    this._daily.updateDaily(this.idp, pagar).then(() => {
+      console.log('actualizado')
+    })
+    this.pagarModal = false
   }
 }

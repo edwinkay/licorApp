@@ -1,187 +1,239 @@
 <app-navbar></app-navbar>
-<div class="table-responsive">
-  <div
-    style="
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      row-gap: 6px;
-    "
-  >
-    <div class="product" *ngFor="let producto of products">
-      <div
-        style="border: 1px solid #8080802e; border-radius: 6px; margin: 2px"
-        class="producto"
-        (click)="abrirModal(producto)"
-      >
-        <img
-          [src]="producto.imagenes"
-          alt="Imagen no disponible"
-          width="100"
-          height="100"
-        />
-        <h3 style="text-align: center">{{ producto.nombre }}</h3>
-        <p>${{ producto.precio | currency : " " : "symbol" : "1.0" }}</p>
-        <p style="text-align: center">{{ producto.descripcion }}</p>
-        <p>
-          Disponible:
-          {{ producto.disponible ? producto.disponible : "No disponible" }}
-        </p>
-        <p style="color: red">{{ producto.disponible ? "" : message }}</p>
-      </div>
-    </div>
-    <!-- modal producto -->
-    <div class="modal" *ngIf="modalActivo">
-      <div class="contenido-modal">
-        <img
-          [src]="productoSeleccionado.imagenes"
-          alt="Imagen no disponible"
-          width="200"
-          height="200"
-        />
-        <h3>{{ productoSeleccionado.nombre }}</h3>
-        <p>Descripción: {{ productoSeleccionado.descripcion }}</p>
-        <p style="text-align: center">
-          Precio:
-          <input
-            style="text-align: center"
-            type="number"
-            [(ngModel)]="productoSeleccionado.precio"
-            (input)="actualizarPrecioTotal()"
+<!-- <button (click)="mostrarInventario()">mostrar</button> -->
+<div>
+  <div class="table-responsive">
+    <div
+      style="
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        row-gap: 6px;
+      "
+    >
+      <div class="product" *ngFor="let producto of products">
+        <div
+          style="border: 1px solid #8080802e; border-radius: 6px; margin: 2px"
+          class="producto"
+          (click)="abrirModal(producto)"
+        >
+          <img
+            [src]="producto.imagenes"
+            alt="Imagen no disponible"
+            width="100"
+            height="100"
           />
-        </p>
-        <p>
-          Disponible:
-          {{
-            productoSeleccionado.disponible
-              ? productoSeleccionado.disponible
-              : "No disponible"
-          }}
-        </p>
-        <div class="input-group">
-          <button
-            class="btn-cantidad btn-decrementar"
-            (click)="decrementarCantidad()"
-          >
-            -
-          </button>
-          <input
-            id="cantidad"
-            type="number"
-            min="0"
-            (ngModelChange)="onInputChange()"
-            [(ngModel)]="productoSeleccionado.cantidad"
-            (input)="actualizarPrecioTotal()"
-          />
-          <button
-            [disabled]="enabledButton"
-            class="btn-cantidad btn-incrementar"
-            (click)="incrementarCantidad()"
-          >
-            +
-          </button>
+          <h3 style="text-align: center">{{ producto.nombre }}</h3>
+          <p>${{ producto.precio | currency : " " : "symbol" : "1.0" }}</p>
+          <p style="text-align: center">{{ producto.descripcion }}</p>
+          <p>
+            Disponible:
+            {{ producto.disponible ? producto.disponible : "No disponible" }}
+          </p>
+          <p style="color: red">{{ producto.disponible ? "" : message }}</p>
         </div>
+      </div>
+      <!-- modal producto -->
+      <div class="modal" *ngIf="modalActivo">
+        <div class="contenido-modal">
+          <img
+            [src]="productoSeleccionado.imagenes"
+            alt="Imagen no disponible"
+            width="200"
+            height="200"
+          />
+          <h3>{{ productoSeleccionado.nombre }}</h3>
+          <p>Descripción: {{ productoSeleccionado.descripcion }}</p>
+          <p style="text-align: center">
+            Precio:
+            <input
+              style="text-align: center"
+              type="number"
+              [(ngModel)]="productoSeleccionado.precio"
+              (input)="actualizarPrecioTotal()"
+            />
+          </p>
+          <p>
+            Disponible:
+            {{
+              productoSeleccionado.disponible
+                ? productoSeleccionado.disponible
+                : "No disponible"
+            }}
+          </p>
+          <div class="input-group">
+            <button
+              class="btn-cantidad btn-decrementar"
+              (click)="decrementarCantidad()"
+            >
+              -
+            </button>
+            <input
+              id="cantidad"
+              type="number"
+              min="0"
+              (ngModelChange)="onInputChange()"
+              [(ngModel)]="productoSeleccionado.cantidad"
+              (input)="actualizarPrecioTotal()"
+            />
+            <button
+              [disabled]="enabledButton"
+              class="btn-cantidad btn-incrementar"
+              (click)="incrementarCantidad()"
+            >
+              +
+            </button>
+          </div>
 
-        <p>
-          Precio Total: ${{
-            productoSeleccionado.precioTotal | currency : " " : "symbol" : "1.0"
-          }}
-        </p>
-        <div class="botones">
-          <button style="background-color: red" (click)="cerrarModal()">
-            Cerrar
-          </button>
-          <button
-            style="background-color: green"
-            [disabled]="habilitar"
-            type="button"
-            class="btn btn-success"
-            (click)="registrarProducto()"
-          >
-            Agregar
-          </button>
+          <p>
+            Precio Total: ${{
+              productoSeleccionado.precioTotal
+                | currency : " " : "symbol" : "1.0"
+            }}
+          </p>
+          <div class="botones">
+            <button style="background-color: red" (click)="cerrarModal()">
+              Cerrar
+            </button>
+            <button
+              style="background-color: green"
+              [disabled]="habilitar"
+              type="button"
+              class="btn btn-success"
+              (click)="registrarProducto()"
+            >
+              Agregar
+            </button>
+          </div>
         </div>
       </div>
     </div>
   </div>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th scope="col">Nombre</th>
-        <th scope="col">Cantidad</th>
-        <th scope="col">SubTotal</th>
-        <th scope="col">Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let producto of productosRegistrados">
-        <td>{{ producto.nombre }}</td>
-        <td>{{ producto.cantidad }}</td>
-        <td>
-          $ {{ producto.precioTotal | currency : " " : "symbol" : "1.0" }}
-        </td>
-        <td>
-          <button class="btn btn-danger" (click)="eliminarProducto(producto)">
-            Eliminar
-          </button>
-        </td>
-      </tr>
-    </tbody>
-    <tfoot *ngIf="productosRegistrados.length !== 0">
-      <tr style="background-color: #0014ff2b">
-        <th>Total:</th>
-        <th>$ {{ calcularTotal() }}</th>
-        <th>
-          <button class="btn btn-success" (click)="modalRegistrar()">
-            Agregar Reporte
-          </button>
-          <div class="modal" *ngIf="registrarActivo">
-            <div class="contenido-modal">
-              <span style="margin-bottom: 14px">Agregar nuevo reporte</span>
-              <div style="display: contents">
+
+  <div class="contenedor-flotante" *ngIf="valor" [@slideInFromRight]>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Nombre</th>
+          <th scope="col">descripcion</th>
+          <th scope="col">Cantidad</th>
+          <th scope="col">precio</th>
+          <th scope="col">Total</th>
+          <th scope="col">pago?</th>
+          <th scope="col">pagar</th>
+          <th scope="col">Nota</th>
+          <th scope="col">Eliminar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let day of daily">
+          <td>{{ day.nombre }}</td>
+          <td>{{ day.descripcion }}</td>
+          <td>{{ day.cantidad }}</td>
+          <td>$ {{ day.precio | currency : " " : "symbol" : "1.0" }}</td>
+          <td>$ {{ day.precioTotal | currency : " " : "symbol" : "1.0" }}</td>
+          <td>
+            <input
+              class="styled-checkbox"
+              [disabled]="true"
+              type="checkbox"
+              [(ngModel)]="day.pago"
+            />
+          </td>
+          <td>
+            <button class="btn btn-success" (click)="abrirPago(day.id)">Pagar</button>
+            <div class="modal" *ngIf="pagarModal">
+              <div class="contenido-modal">
                 <span>Total a pagar: </span>
-                <p>
-                  ${{ calcularTotal() | currency : " " : "symbol" : "1.0" }}
-                </p>
-                <p>Devuelta: ${{ resultado }}</p>
-                <label>
-                  <input
-                    [(ngModel)]="valorRestado"
-                    (ngModelChange)="restarValor()"
-                    type="number"
-                  />
-                </label>
-              </div>
-              <div style="gap: 7px; display: flex">
-                <button
-                  class="btn btn-danger"
-                  style="background-color: blue"
-                  (click)="cerrarModal()"
-                >
-                  Cerrar
-                </button>
-                <button
-                  (click)="agregarReporte()"
-                  style="background-color: green"
-                  type="button"
-                  class="btn btn-success"
-                  [disabled]="limitarClick"
-                >
-                  Crear
-                </button>
+              <p>$ {{ day.precioTotal | currency : " " : "symbol" : "1.0" }}</p>
+              <p>Devuelta: ${{ (valorRestado - day.precioTotal) >= 0 ? (valorRestado - day.precioTotal) : 0 }}</p>
+
+              <div style="display: contents">
+                  <label>
+                    <input
+                      [(ngModel)]="valorRestado"
+                      (ngModelChange)="restarValor()"
+                      type="number"
+                    />
+                  </label>
+                </div>
+                <div style="gap: 7px; display: flex">
+                  <button
+                    class="btn btn-danger"
+                    style="background-color: blue"
+                    (click)="cerrarModal()"
+                  >
+                    Cerrar
+                  </button>
+                  <button
+                    (click)="actualizar()"
+                    style="background-color: green"
+                    type="button"
+                    class="btn btn-success"
+                    [disabled]="limitarClick"
+                  >
+                    Pagar
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        </th>
-        <th>
+          </td>
+          <td>
+            <textarea name="" id="" cols="30" rows="1"> </textarea>
+          </td>
+          <td>
+            <button class="btn btn-danger" (click)="eliminarProducto(day.id)">
+              X
+            </button>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot *ngIf="daily.length !== 0">
+        <tr style="background-color: #0014ff2b">
+          <th>Total:</th>
+          <th>${{total}}</th>
+          <th>Ganancia:</th>
+          <th>${{ganancia}}</th>
+          <th>
+            <button class="btn btn-success" (click)="modalRegistrar()">
+              Agregar Reporte
+            </button>
+            <div class="modal" *ngIf="registrarActivo">
+              <div class="contenido-modal">
+                <span style="margin-bottom: 14px"
+                  >¿Estas seguro? al hacer esto se borrara todo el contenido del
+                  dia, pero se guardara en un reporte</span
+                >
+                <div style="gap: 7px; display: flex">
+                  <button
+                    class="btn btn-danger"
+                    style="background-color: blue"
+                    (click)="cerrarModal()"
+                  >
+                    Cerrar
+                  </button>
+                  <button
+                    (click)="agregarReporte()"
+                    style="background-color: green"
+                    type="button"
+                    class="btn btn-success"
+                    [disabled]="limitarClick"
+                  >
+                    Crear
+                  </button>
+                </div>
+              </div>
+            </div>
+          </th>
+          <!-- <th>
           <button class="btn btn-danger" (click)="borrarTabla()">
             Borrar todo
           </button>
-        </th>
-      </tr>
-    </tfoot>
-    <p style="margin: 6px" *ngIf="productosRegistrados.length == 0">
-      No hay productos seleccionados
-    </p>
-  </table>
+        </th> -->
+        </tr>
+      </tfoot>
+      <p style="margin: 6px" *ngIf="daily.length == 0">
+        No hay productos seleccionados
+      </p>
+    </table>
+  </div>
 </div>

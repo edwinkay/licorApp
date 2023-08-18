@@ -135,4 +135,32 @@
   width: 140px;
   height: 300px;
 }
+/* Estilo para la ventana flotante */
+.contenedor-flotante {
+  position: absolute;
+  top: 0;
+  right: -400px; /* Inicialmente fuera de la pantalla */
+  width: 400px;
+  height: 100%;
+  background-color: #fff;
+  box-shadow: -2px 0px 6px rgba(0, 0, 0, 0.3);
+  padding: 20px;
+  z-index: 1000;
+  transition: right 0.3s ease-in-out;
+}
+
+/* Animación para mostrar la ventana flotante */
+@keyframes slideInFromRight {
+  0% {
+    right: -400px;
+  }
+  100% {
+    right: 0;
+  }
+}
+.changeV{
+  position: absolute;
+  color: #007bff;
+}
+
 }

@@ -27,7 +27,7 @@
       <h3 class="welcome">Hola!! {{ dataUser }}</h3>
     </div>
     <div>
-      <span class="logout" (click)="logout()">Cerrar Sesion</span>
+      <i (click)="enviarValor()" style="font-size: 30px; cursor: pointer;" class="fas fa-shopping-cart"></i>
     </div>
   </div>
 </mat-toolbar>
@@ -39,6 +39,7 @@
       <a mat-list-item routerLink="/info-product">Productos Info</a>
       <a mat-list-item routerLink="/reportes">Reportes</a>
       <a mat-list-item routerLink="/estadisticas">Estadisticas</a>
+      <a mat-list-item (click)="logout()">Cerrar Sesion</a>
       <a mat-list-item (click)="abrir()">Acerca de</a>
     </mat-nav-list>
   </mat-sidenav>
@@ -50,3 +51,4 @@
     </div>
   </div>
 </mat-sidenav-container>
+

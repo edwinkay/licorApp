@@ -48,3 +48,56 @@ margin: 0;
 }
 
 input[type=number] { -moz-appearance:textfield; }
+
+/* Estilo para la ventana flotante */
+.contenedor-flotante {
+  position: fixed;
+  top: 0;
+  left: 0%; /* Inicialmente fuera de la pantalla */
+  width: 95%;
+  height: 100%;
+  background-color: #fff;
+  box-shadow: -2px 0px 6px rgba(0, 0, 0, 0.3);
+  padding: 20px;
+  z-index: 1000;
+  transition: right 0.3s ease-in-out;
+}
+
+/* Animación para mostrar la ventana flotante */
+@keyframes slideInFromRight {
+  0% {
+    right: -400px;
+  }
+  100% {
+    right: 0;
+  }
+}
+.changeV{
+  position: absolute;
+  color: #007bff;
+}
+.styled-checkbox {
+  margin-right: 5px;
+  vertical-align: middle;
+  /* Cambiar el tamaño del checkbox */
+  transform: scale(1.5); /* Ajusta este valor según tus preferencias */
+
+  /* Cambiar el color del checkbox */
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 20px;
+  height: 20px;
+  background-color: white;
+  border: 2px solid red; /* Color del borde para false */
+  border-radius: 4px;
+  transition: border-color 0.3s, background-color 0.3s; /* Transición suave para cambios de color */
+
+  /* Cambiar el color del check interno */
+  &:checked {
+    background-color: green; /* Color para true */
+    border: 2px solid rgb(4, 135, 251); /* Color del borde para true */
+  }
+}
+
+
