@@ -30,7 +30,12 @@ export class LoginFormComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.loginUsuario.patchValue({
+      email: 'administrador.sistema@gmail.com',
+      password: '123400',
+    });
+  }
 
   login() {
     const email = this.loginUsuario.value.email;
